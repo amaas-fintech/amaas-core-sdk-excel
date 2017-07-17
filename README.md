@@ -8,7 +8,7 @@ AMaaS Core features a secure, encrypted database, which serves as the foundation
 
 ## Quick Start
 Install Packages: 
-```c#
+```
 Install-Package Excel-Dna
 Install-Package BouncyCastle
 Install-Package Newtonsoft.Json
@@ -16,9 +16,9 @@ Install-Package AWSSDK.ApplicationAutoScaling
 Install-Package AWSSDK.CognitoIdentityProvider
 inSTALL-Package AWSSDK.Core
 ```
-Add the following paramaters in App.config with your own credentials:
-```c#
- <add key="USERNAME" value="" />
+Add the following parameters in App.config with your own credentials:
+```
+    <add key="USERNAME" value="" />
     <!--Your Username-->
     <add key="PASSWORD" value=""/>
     <!--Your Password-->
@@ -39,4 +39,4 @@ Add the following paramaters in App.config with your own credentials:
 The SDK contains unit tests to test the SRP authentication connection and data retrival by calling AWS endpoint url. The way to run the suite is: Test->Run->All Tests.
 
 ## Support
-For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at [I'm an inline-style link]support@amaas.com. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
+For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at support@amaas.com. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
