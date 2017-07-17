@@ -1,1 +1,1 @@
-"# amaas-core-sdk-net" 
+#AMaaS Core SDK for Python
