@@ -1,1 +1,1 @@
-#AMaaS Core SDK for Python
+# AMaaS Core SDK for .Net
