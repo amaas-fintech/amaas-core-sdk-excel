@@ -36,7 +36,7 @@ Add the following parameters in App.config with your own credentials:
     <!--Endpoint URL-->
 ```
 ## Testing 
-The SDK contains unit tests to test the SRP authentication connection and data retrival by calling AWS endpoint url. The way to run the suite is: Test->Run->All Tests.
+The SDK contains unit tests to test the SRP authentication connection and data retrival by calling AWS endpoints. The way to run the suite is: Test->Run->All Tests.
 
 ## Support
 For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at support@amaas.com. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
