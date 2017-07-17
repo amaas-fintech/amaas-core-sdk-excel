@@ -14,7 +14,7 @@ Install-Package BouncyCastle
 Install-Package Newtonsoft.Json
 Install-Package AWSSDK.ApplicationAutoScaling
 Install-Package AWSSDK.CognitoIdentityProvider
-inSTALL-Package AWSSDK.Core
+Install-Package AWSSDK.Core
 ```
 Add the following parameters in App.config with your own credentials:
 ```
