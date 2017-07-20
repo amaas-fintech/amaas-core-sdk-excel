@@ -8,19 +8,19 @@ namespace Amaas.Core.Sdk.Excel.Udf
     {
         [ExcelFunction(Name = "GetPosition", Description = "Get positions")]
         [ExcelCommand(ShortCut = "GP")]
-        public static object GetPositionUdf([ExcelArgument(AllowReference = true)] string AMID, string bookID, string startDate, string pageSize, string pageNum) =>
+        public static object GetPositionUdf([ExcelArgument(AllowReference = true, Name = "AMID")] string AMID, [ExcelArgument(Name = "book ID")]string bookID, [ExcelArgument(Name = "startDate")]string startDate, [ExcelArgument(Name = "pageSize")]string pageSize, [ExcelArgument(Name = "pageNum")]string pageNum) =>
            new TransactionUdf().GetPositions(AMID, bookID, startDate, pageSize, pageNum);
 
         [ExcelFunction(Name = "GetTransactionByBookID", Description = "Get transactions according to Book ID")]
         [ExcelCommand(ShortCut = "GTB")]
         public static object GetTransactionByBookIDUdf(
-            [ExcelArgument(AllowReference = true, Name = "AMID")] string AMID, [ExcelArgument(Name = "bookID")]string bookID, [ExcelArgument(Name = "startDate")]string startDate, [ExcelArgument(Name = "endDate")]string endDate, [ExcelArgument(Name = "pageSize")]string pageSize, [ExcelArgument(Name = "pageNum")]string pageNum) =>
+            [ExcelArgument(AllowReference = true, Name = "AMID")] string AMID, [ExcelArgument(Name = "book ID")]string bookID, [ExcelArgument(Name = "startDate")]string startDate, [ExcelArgument(Name = "endDate")]string endDate, [ExcelArgument(Name = "pageSize")]string pageSize, [ExcelArgument(Name = "pageNum")]string pageNum) =>
             new TransactionUdf().GetTransactionByBookID(AMID, bookID, startDate, endDate, pageSize, pageNum);
 
         [ExcelFunction(Name = "GetTransactionByTransactionID", Description = "Get transactions according to transaction ID")]
         [ExcelCommand(ShortCut = "GTT")]
         public static object GetTransactionByTransactionIDUdf(
-            [ExcelArgument(AllowReference = true)] string AMID, string transactionID, string startDate, string endDate, string pageSize, string pageNum) =>
+            [ExcelArgument(AllowReference = true, Name = "AMID")] string AMID, [ExcelArgument(Name = "transaction ID")]string transactionID, [ExcelArgument(Name = "startDate")]string startDate, [ExcelArgument(Name = "endDate")]string endDate, [ExcelArgument(Name = "pageSize")]string pageSize, [ExcelArgument(Name = "pageNum")]string pageNum) =>
             new TransactionUdf().GetTransactionByTransactionID(AMID, transactionID, startDate, endDate, pageSize, pageNum);
 
         public object GetPositions(string AMID, string bookID, string startDate, string pageSize, string pageNum)
