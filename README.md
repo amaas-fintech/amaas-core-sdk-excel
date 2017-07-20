@@ -35,6 +35,12 @@ Add the following parameters in App.config with your own credentials:
     <add key="BASEURL" value="" />
     <!--Endpoint URL-->
 ```
+Install .xll:
+```
+   Excel-DNA/IntelliSense
+```
+IntelliSense can be downloaded at: https://github.com/Excel-DNA/IntelliSense. And load IntelliSense.xll to Excel.
+
 ## Test Project on Visual Studio 
 The SDK contains unit tests to test the SRP authentication connection and data retrival by calling AWS endpoints. The way to run the suite is: Test->Run->All Tests.
 
