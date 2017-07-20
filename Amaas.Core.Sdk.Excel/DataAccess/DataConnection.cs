@@ -16,7 +16,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             return idToken;
         }
 
-        public static async Task<String> RetrieveData(string AMID, string resourceID, string flag)
+         public static async Task<String> RetrieveData(string AMID, string resourceID, string startDate, string endDate, string pageSize, string pageNum, string flag)
         {
             string idToken = Auth();
             string responseResult = "";
@@ -37,15 +37,18 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                     string url = "";
                     if (flag == "TransactionByTransactionID")
                     {
-                        url = $"{ConfigurationManager.AppSettings["TRANSACTION"]}{AMID}/{resourceID}";
+                        url = $"{ConfigurationManager.AppSettings["TRANSACTION"]}{AMID}/{resourceID}" + resourceID + "?" + "transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
+                        url = RemoveQueryStringByKey(url);
                     }
-                    else if(flag== "TransactionByBookID")
+                    else if (flag == "TransactionByBookID")
                     {
-                        url = ConfigurationManager.AppSettings["TRANSACTION"] + AMID + "?" + "asset_book_ids=" + resourceID;
+                        url = ConfigurationManager.AppSettings["TRANSACTION"] + AMID + "?" + "asset_book_ids=" + resourceID + "&transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
+                        url = RemoveQueryStringByKey(url);
                     }
                     else if (flag == "Position")
                     {
-                        url = ConfigurationManager.AppSettings["POSITION"] + AMID + "?" + "book_ids=" + resourceID;
+                        url = ConfigurationManager.AppSettings["POSITION"] + AMID + "?" + "book_ids=" + resourceID + "&position_date=" + startDate + "&page_size=" + pageSize + "&page_no=" + pageNum;// + "&position_date=" + endDate;
+                        url = RemoveQueryStringByKey(url);
                     }
                     else
                     {
@@ -58,6 +61,37 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                 }
             }
             return responseResult;
+        }
+        
+         public static string RemoveQueryStringByKey(string url)
+        {
+            var uri = new Uri(url);
+
+            // this gets all the query string key value pairs as a collection
+            var newQueryString = HttpUtility.ParseQueryString(uri.Query);
+
+            List<string> keysToRemove = new List<string>();
+            foreach (string key in newQueryString)
+            {
+                string result = newQueryString.Get(key);
+                if (newQueryString.Get(key) == "")
+                {
+                    // this removes the key if not exists
+                    keysToRemove.Add(key);
+                }
+            }
+
+            foreach (var key in (List<string>)keysToRemove)
+            {
+                newQueryString.Remove(key);
+            }
+
+            // this gets the page path from root without QueryString
+            string pagePathWithoutQueryString = uri.GetLeftPart(UriPartial.Path);
+
+            return newQueryString.Count > 0
+                ? String.Format("{0}?{1}", pagePathWithoutQueryString, newQueryString)
+                : pagePathWithoutQueryString;
         }
     }
 }
