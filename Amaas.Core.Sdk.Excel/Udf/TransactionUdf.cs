@@ -25,8 +25,6 @@ namespace Amaas.Core.Sdk.Excel.Udf
 
         public object GetPositions(string AMID, string bookID, string startDate, string pageSize, string pageNum)
         {
-            //if (bookID == "") return "Book ID is required";
-            //if (AMID == "") return "Asset Manager ID is required";
             TransactionDataAccess TDA = new TransactionDataAccess();
             object[,] getArray = TDA.Position(AMID, bookID, startDate, pageSize, pageNum);
             return ArrayResizer.Resize(getArray, "position");
@@ -34,10 +32,6 @@ namespace Amaas.Core.Sdk.Excel.Udf
 
         public object GetTransactionByTransactionID(string AMID, string transactionID, string startDate, string endDate, string pageSize, string pageNum)
         {
-            //if (transactionID == "") return "Transaction ID is required";
-            //if (AMID == "") return "Asset Manager ID is required";
-            // Worksheet.Range["A1", "B1"].Interior.Color = Excel.XlRgbColor.rgbDarkBlue;
-
             TransactionDataAccess TDA = new TransactionDataAccess();
             object[,] getArray = TDA.Transaction(AMID, transactionID, startDate, endDate, pageSize, pageNum, "TransactionByTransactionID");
             return ArrayResizer.Resize(getArray, "transactions");
@@ -45,8 +39,6 @@ namespace Amaas.Core.Sdk.Excel.Udf
 
         public object GetTransactionByBookID(string AMID, string bookID, string startDate, string endDate, string pageSize, string pageNum)
         {
-            //if (bookID == "") return "Book ID is required";
-            //if (AMID == "") return "Asset Manager ID is required";
             TransactionDataAccess TDA = new TransactionDataAccess();
             object[,] getArray = TDA.Transaction(AMID, bookID, startDate, endDate, pageSize, pageNum, "TransactionByBookID");
             return ArrayResizer.Resize(getArray, "transactions");
