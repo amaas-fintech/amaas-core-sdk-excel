@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -8,14 +8,14 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
 {
     public class TransactionDataAccess
     {
-         public object[,] Position(string AMID, string bookID, string startDate, string pageSize, string pageNum)
+        public object[,] Position(string AMID, string bookID, string startDate, string pageSize, string pageNum)
         {
             object[,] newArray;
             var returnData = DataConnection.RetrieveData(AMID, bookID, startDate, "", pageSize, pageNum, "Position").Result;
-            if (returnData.Equals("[]") || returnData.Equals("")) return new object[1, 1] { { "The data does not exist" } };
-
             var arrayResult = JsonConvert.DeserializeObject<dynamic>(returnData);
 
+            if (returnData.Equals("[]") || returnData.Equals("")) return new object[1, 1] { { "The data does not exist" } };
+            
             JArray jobjArray = JsonConvert.DeserializeObject<dynamic>(returnData.ToString());
             int colnums = jobjArray.Count;
             int rows = 0;
@@ -28,9 +28,10 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                 if (count > rows) rows = count;
             }
             //create newArray to display
-            newArray = new object[colnums + 1, rows];
-            colnums = 0;
+            newArray = new object[colnums+1, rows];
+            colnums = 0;//reset colnums and rows 
             rows = 0;
+
             //proces the result
             var itemList = new List<string[]>();
             foreach (var stringValue in arrayResult)
@@ -39,20 +40,21 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                 JObject jobj = JsonConvert.DeserializeObject<dynamic>(stringValue.ToString());
                 int count = jobj.Count;
                 colnums++;
-                rows = 0;
-
-                foreach (var item in jobj)
+                rows = 0;   
+                
+                foreach(var item in jobj)
                 {
                     newArray[0, rows++] = item.Key.ToString();//heder is always at col=0
-                }
+                }                
+                
                 for (int i = 0; i < count; i++)
                 {
                     rows = 0;
-                    foreach (var rate in jobj)//var rate in token[i]
+                    foreach (var rate in jobj)
                     {
                         newArray[colnums, rows++] = rate.Value.ToString();
                     }
-                }
+                }           
             }
 
             return newArray;
@@ -61,7 +63,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
         public object[,] Transaction(string AMID, string resourceID, string startDate, string endDate, string pageSize, string pageNum, string flag)
         {
             string returnData = "";
-            if (flag == "TransactionByTransactionID") returnData = DataConnection.RetrieveData(AMID, resourceID, startDate, endDate, pageSize, pageNum, "TransactionByTransactionID").Result;
+            if (flag == "TransactionByTransactionID") returnData = DataConnection.RetrieveData(AMID, resourceID, startDate,endDate, pageSize, pageNum, "TransactionByTransactionID").Result;
             else if (flag == "TransactionByBookID") returnData = DataConnection.RetrieveData(AMID, resourceID, startDate, endDate, pageSize, pageNum, "TransactionByBookID").Result; //Received an array           
 
             var arrayResult = JsonConvert.DeserializeObject<dynamic>(returnData);
@@ -80,21 +82,16 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             return horizontalArray;
         }
 
-
         private int countRows(string dataString)
         {
             int rowCounter = 0;
-            string[] children = { "", "", "", "" }; //your children parameters
+            string[] children = { "references", "parties", "codes", "comments" };
             var objectResult = JsonConvert.DeserializeObject<dynamic>(dataString);
 
             foreach (var item in objectResult)
             {
                 rowCounter++;
-                if (item.Value is JValue)
-                {
-                    //do nothing
-                }
-                else //for non-children params
+                if (!(item.Value is JValue))
                 {
                     string paramsToCheck = item.Name.ToString();
                     foreach (string x in children)
@@ -116,7 +113,6 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                     }
                 }
             }
-
             return rowCounter;
         }
 
@@ -125,7 +121,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             Dictionary<object[,], int> dataReturn = new Dictionary<object[,], int>();
 
             JToken outer = JToken.Parse(dataString);
-            string[] children = { "", "", "", "" };//your children parameters
+            string[] children = { "references", "parties", "codes", "comments" };
             for (int i = 0; i < children.Length; i++)
             {
                 string childObject = children[i];
@@ -135,8 +131,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                 foreach (string k in keys)
                 {
                     referenceTypeCounter++;
-                    newArray[rows, colnums] = k;
-                    //will not increase rows here
+                    newArray[rows, colnums ] = k;
                     JObject inner2 = inner[k].Value<JObject>();
                     List<string> keys2 = inner2.Properties().Select(p => p.Name).ToList();
                     foreach (string value in keys2)
@@ -163,7 +158,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                 {
                     string[] itemArray = new string[]
                     {
-                          item.Name,item.Value
+                       item.Name,item.Value
                     };
 
                     itemList.Add(itemArray);
@@ -178,7 +173,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             var objectResult = JsonConvert.DeserializeObject<dynamic>(dataString);
             int rowCounter = 0;
             string[] children = { "references", "parties", "codes", "comments" };
-
+            int colnumCounter;
             object[,] objectD2;
             Boolean isArrayString = false;
             if (dataString[0] == '[') isArrayString = true;
@@ -188,23 +183,25 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             if (isArrayString)
             {
                 int eachRowNum = 0;
-
+               
                 foreach (var itemString in objectResult) //for every non-array string
                 {
                     var itemdataResult = JsonConvert.DeserializeObject<dynamic>(itemString.ToString());
-                    eachRowNum = countRows(itemdataResult.ToString());
+                    eachRowNum= countRows(itemdataResult.ToString());
                     testList.Add(eachRowNum);
                     if (rowCounter < eachRowNum) rowCounter = eachRowNum;//Max row num which would be colnum later 
                 }
+
+                colnumCounter = objectResult.Count;
             }
             else
             {
-                rowCounter = countRows(dataString);
+                 rowCounter = countRows(dataString);
+                colnumCounter = 1;
             }
-            //test colnums
-            int colnums = objectResult.Count;
+           
             //create a new array to resize with rowCounter 
-            object[,] newArray = new object[rowCounter + 2, colnums + 1]; //FIXED COL/ +header   created array with rows-children, colnum-num of non-array string
+            object[,] newArray = new object[rowCounter+2, colnumCounter+1]; //FIXED COL/ +header   created array with rows-children, colnum-num of non-array string
 
             //sign every value to ""
             for (int i = 0; i < newArray.GetLength(0); i++)
@@ -216,15 +213,14 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                 Console.WriteLine();
             }
             //Assign header to col 0
-            if (isArrayString)
+            if(isArrayString)
             {
                 foreach (var itemString in objectResult) //for every non-array string
                 {
                     var itemdataResult = JsonConvert.DeserializeObject<dynamic>(itemString.ToString()); //for each array string
                     int rows = 0;
                     if (countRows(itemdataResult.ToString()) == rowCounter)//for insertion of the header
-                    {
-
+                    {                  
                         foreach (var item in itemdataResult)//add non children value to list
                         {
                             if (item.Value is JValue)
@@ -232,7 +228,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                                 newArray[rows++, 0] = item.Name;
                             }
                         }
-
+                        //isHeader = true;
                         JToken outer = JToken.Parse(itemString.ToString());
                         for (int i = 0; i < children.Length; i++)
                         {
@@ -243,18 +239,16 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                             foreach (string k in keys)
                             {
                                 referenceTypeCounter++;
-                                newArray[rows++, 0] = childObject;
-                                //will not increase rows here
+                                newArray[rows++, 0] = childObject;                               
                                 JObject inner2 = inner[k].Value<JObject>();
                                 List<string> keys2 = inner2.Properties().Select(p => p.Name).ToList();
                                 foreach (string value in keys2)
                                 {
-                                    double num;
                                     var jtValue = inner2.GetValue(value);
-                                    newArray[rows++, 0] = childObject + referenceTypeCounter + "." + value;
+                                    newArray[rows++, 0] = childObject + referenceTypeCounter + "." + value;                         
                                 }
                             }
-                        }
+                        }                    
                     }
                 }
             }
@@ -266,31 +260,51 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                 //convert list to array
                 string[][] terms = itemList.ToArray();
                 string[,] termsD2 = To2D(terms);
-                objectD2 = (object[,])termsD2;
+                objectD2 = (object[,]) termsD2;
 
                 int rows = objectD2.GetLength(0);
-                int colnums = objectD2.GetLength(1);
+                int colnums = 0;
                 //copy non-children values 
                 for (int i = 0; i < objectD2.GetLength(0); i++)
                 {
                     for (int j = 0; j < objectD2.GetLength(1); j++)
                     {
-                        double num;
+                        double num ;
                         string thisData = objectD2[i, j].ToString();
                         if (double.TryParse(thisData, out num)) newArray[i, j] = Convert.ToDouble(thisData);
                         else newArray[i, j] = thisData;//copy 
                     }
                 }
-                Dictionary<object[,], int> returnData = getChildrenParamsValue(dataString, newArray, rows, colnums);
-                foreach (KeyValuePair<object[,], int> pair in returnData)
+                //add children value to list
+                foreach (var item in objectResult)
                 {
-                    newArray = pair.Key;
-                }
+                    if (! (item.Value is JValue))
+                    {
+                        //if it is children value
+                        string childrenName= item.Name.ToString();
+                        newArray[rows, colnums] = childrenName;
+                        var itemdataResult = JsonConvert.DeserializeObject<dynamic>(item.Value.ToString());
+                        int count = 1;
+                        foreach (var childrenparams in itemdataResult)//children types 
+                        {
+                            newArray[rows, colnums+1] = childrenparams.Name.ToString();
+                            rows++;
+                            var subchildren = JsonConvert.DeserializeObject<dynamic>(childrenparams.Value.ToString());
+                            foreach (var itemChildren in subchildren)
+                            {
+                                newArray[rows, colnums] = childrenName+count+"."+itemChildren.Name.ToString();
+                                newArray[rows, colnums + 1] = itemChildren.Value.ToString();
+                                rows++;
+                            }
+                            count++;
+                        }
+                    }
+                }             
             }
             else
             {
-                int rows = 0;
-                int colnums = 0;
+                int rows=0;
+                int colnums=0;
                 //reserve colnum 0 for header
                 foreach (var itemString in objectResult) //for every non-array string
                 {
@@ -320,7 +334,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             }
             return newArray;
         }
-
+       
         public T[,] To2D<T>(T[][] source)
         {
             try
@@ -337,7 +351,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             }
             catch (Exception)
             {
-                if (source.Count() != 0) throw new InvalidOperationException("The given jagged array is not rectangular.");
+                if(source.Count()!=0) throw new InvalidOperationException("The given jagged array is not rectangular.");
                 else throw new System.ArgumentException("The transaction does not exist", "source");
             }
         }
