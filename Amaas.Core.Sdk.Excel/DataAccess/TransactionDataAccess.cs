@@ -84,7 +84,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
         private int countRows(string dataString)
         {
             int rowCounter = 0;
-            string[] children = { "references", "parties", "codes", "comments" };
+            string[] children = { "", "", "", "" };//children parameters
             var objectResult = JsonConvert.DeserializeObject<dynamic>(dataString);
 
             foreach (var item in objectResult)
@@ -120,7 +120,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             Dictionary<object[,], int> dataReturn = new Dictionary<object[,], int>();
 
             JToken outer = JToken.Parse(dataString);
-            string[] children = { "references", "parties", "codes", "comments" };
+            string[] children = { "", "", "", "" };//children parameters
             for (int i = 0; i < children.Length; i++)
             {
                 string childObject = children[i];
@@ -170,7 +170,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
         {
             var objectResult = JsonConvert.DeserializeObject<dynamic>(dataString);
             int rowCounter = 0;
-            string[] children = { "references", "parties", "codes", "comments" };
+            string[] children = { "", "", "", "" };//children parameters
             int colnumCounter;
             object[,] objectD2;
             Boolean isArrayString = false;
