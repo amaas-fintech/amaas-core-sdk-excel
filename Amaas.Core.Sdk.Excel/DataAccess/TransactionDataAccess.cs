@@ -56,7 +56,6 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                     }
                 }           
             }
-
             return newArray;
         }
 
@@ -160,7 +159,6 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                     {
                        item.Name,item.Value
                     };
-
                     itemList.Add(itemArray);
                 }
             }
@@ -191,12 +189,11 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                     testList.Add(eachRowNum);
                     if (rowCounter < eachRowNum) rowCounter = eachRowNum;//Max row num which would be colnum later 
                 }
-
                 colnumCounter = objectResult.Count;
             }
             else
             {
-                 rowCounter = countRows(dataString);
+                rowCounter = countRows(dataString);
                 colnumCounter = 1;
             }
            
