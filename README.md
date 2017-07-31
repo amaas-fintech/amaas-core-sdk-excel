@@ -12,6 +12,7 @@ Install Packages and add them as your references for the project:
 Install-Package Excel-Dna
 Install-Package BouncyCastle
 Install-Package Newtonsoft.Json
+Install-Package 
 Install-Package AWSSDK.ApplicationAutoScaling
 Install-Package AWSSDK.CognitoIdentityProvider
 Install-Package AWSSDK.Core
@@ -42,7 +43,7 @@ Install .xll:
 ```
 IntelliSense can be downloaded at: https://github.com/Excel-DNA/IntelliSense. 
 
-##Quick start
+## Quick start
 This project allows developers to develop Excel user defined functions (UDF) to retrieve data by calling AWS endpoint URL.  
 
 To connect to your AWS
