@@ -12,7 +12,6 @@ Install Packages and add them as your references for the project:
 Install-Package Excel-Dna
 Install-Package BouncyCastle
 Install-Package Newtonsoft.Json
-Install-Package 
 Install-Package AWSSDK.ApplicationAutoScaling
 Install-Package AWSSDK.CognitoIdentityProvider
 Install-Package AWSSDK.Core
