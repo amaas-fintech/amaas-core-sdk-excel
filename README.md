@@ -62,7 +62,7 @@ Run Amaas.Core.Sdk.Authentication.Tests to check your authntication.
 ```
 To create your query string
 ```
-Navigate to App.config:
+1. Navigate to App.config:
     <add key="TRANSACTION" value="" />
     <!--Endpoint URL-->
     <add key="POSITION" value="" />
@@ -71,20 +71,20 @@ Navigate to App.config:
     <!--Endpoint URL-->  
     <add key="YourURL" value="" />
     <!--Your Endpoint URL-->  
-Or add more keys for your endpoints and change the following code: 
-     DataConnection.cs: 
+2. Or add more keys for your endpoints and change the following code: 
+   ⋅⋅*DataConnection.cs: 
      else if (flag == "Flag To Identify Different function calls which call the corresponding query string")
      {
          url = ConfigurationManager.AppSettings["YouNewKey"];
          url = RemoveQueryStringByKey(url); //remove the empty parameters in the query string in case users leave UDF parameters blank
      }
-     TransactionDataAccess.cs:
-     method indentifier: 
-     Transaction(string AMID, string resourceID, string flag)
-     and body:
-     else if (flag == "Flag To Identify Different function calls which call the corresponding query string") returnData =                    DataConnection.RetrieveData("create your parameters to be passed, if you have any").Result; //Receive an array   
-Also have to change:
-     TransactionDataAccess.cs:
+   ⋅⋅*TransactionDataAccess.cs:
+       method indentifier: 
+            Transaction(string AMID, string resourceID, string flag)
+       and body:
+            else if (flag == "Flag To Identify Different function calls which call the corresponding query string") returnData =                     DataConnection.RetrieveData("create your parameters to be passed, if you have any").Result; //Receive an array   
+3. Also have to change:
+   ⋅⋅*TransactionDataAccess.cs:
      string[] children = { "children array in the json string1", "children array in the json string2" }; in countRows,                        getChildrenParamsValue, convertToNestedArray methods.    
 ```
 To create a UDF: 
