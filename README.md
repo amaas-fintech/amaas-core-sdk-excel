@@ -45,7 +45,7 @@ IntelliSense can be downloaded at: https://github.com/Excel-DNA/IntelliSense.
 ## Quick start
 This project allows developers to develop Excel user defined functions (UDF) to retrieve data by calling AWS endpoint URL.  
 
-To connect to your AWS
+To authenticate your AWS with Secure Remote Password (SRP)
 ```
 Navigate to App.config:
     <add key="USERNAME" value="" />
