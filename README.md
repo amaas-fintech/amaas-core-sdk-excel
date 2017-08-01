@@ -43,7 +43,7 @@ Install .xll:
 IntelliSense can be downloaded at: https://github.com/Excel-DNA/IntelliSense. 
 
 ## Quick start
-This project allows developers to develop Excel user defined functions (UDF) to retrieve data by calling AWS endpoint URL.  
+This project allows developers to develop Excel user defined functions (UDF) to retrieve data by calling AWS endpoint URL with SRP authentication.  
 
 To authenticate your AWS with Secure Remote Password (SRP)
 ```
@@ -82,7 +82,7 @@ To create your query string
        method indentifier: 
             Transaction(string AMID, string resourceID, string flag)
        and body:
-            else if (flag == "Flag To Identify Different function calls which call the corresponding query string") returnData =                     DataConnection.RetrieveData("create your parameters to be passed, if you have any").Result; //Receive an array   
+            else if (flag == "Flag To Identify Different function calls which will call the corresponding query string") returnData =                     DataConnection.RetrieveData("create your parameters to be passed, if you have any").Result; //Receive an array   
 3. Also have to change:
    ->TransactionDataAccess.cs:
      string[] children = { "children array in the json string1", "children array in the json string2" }; in countRows,                        getChildrenParamsValue, convertToNestedArray methods.    
