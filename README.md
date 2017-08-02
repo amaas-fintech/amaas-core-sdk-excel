@@ -85,7 +85,7 @@ To create your query string
             else if (flag == "Flag To Identify Different function calls which will call the corresponding query string") returnData =                     DataConnection.RetrieveData("create your parameters to be passed, if you have any").Result; //Receive an array   
 3. Also have to change:
    ->TransactionDataAccess.cs:
-     string[] children = { "children array in the json string1", "children array in the json string2" }; in countRows,                        getChildrenParamsValue, convertToNestedArray methods.    
+     Update string[] children = { "children array in the json string1", "children array in the json string2" }; with your children            parameters in countRows, getChildrenParamsValue, convertToNestedArray methods.    
 ```
 To create a UDF: 
 ```
