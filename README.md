@@ -42,7 +42,7 @@ Install .xll:
 ```
 IntelliSense can be downloaded at: https://github.com/Excel-DNA/IntelliSense. 
 
-## Quick start
+## Quick start (For developer)
 This project allows developers to develop Excel user defined functions (UDF) to retrieve data by calling AWS endpoint URL with SRP authentication.  
 
 To authenticate your AWS with Secure Remote Password (SRP)
@@ -127,7 +127,12 @@ convertedToNestedArray method in TransactionDataAccess.cs converts an json strin
 The SDK contains unit tests to test the SRP authentication connection and data retrival by calling AWS endpoints. The way to run the suite is: Test->Run->All Tests.
 
 ## Test UDF on Excel
-For clients to utilize UDF on Excel, go to File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.Core.Sdk.Excel-AddIn-packed.xll->OK. Then UDFs can be utilized on Excel directly from the formula bar.
+1. Build ExcelDnaPack file from Visual Studio with the naming covention: YouProjectName-AddIn.dna and YourProjectName-AddIn-packed.xll can be found in bin.
+2. Navigate to Excel File->Options->Add-ins->Manage: Excel Add-ins->Go->YourProjectName-AddIn-packed.xll->OK. Then UDFs can be tested on Excel directly from the formula bar.
+
+## Quick start (For Users)
+1. Download Amaas-core-sdk-net and look for the file: Amaas.core.sdk.Excel-AddIn-packed.xll.
+2. Navigate to Excel File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.core.sdk.Excel-AddIn-packed.xll->OK. Then UDFs can be tested on Excel directly from the formula bar.
 
 ## Support
 For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at support@amaas.com. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
