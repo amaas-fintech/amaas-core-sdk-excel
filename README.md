@@ -127,7 +127,7 @@ convertedToNestedArray method in TransactionDataAccess.cs converts an json strin
 The SDK contains unit tests to test the SRP authentication connection and data retrival by calling AWS endpoints. The way to run the suite is: Test->Run->All Tests.
 
 ## Test UDF on Excel
-For clients to utilize UDF methods on Excel, go to File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.Core.Sdk.Excel Add-In->OK. Then UDFs can be tested through Excel directly on the formula bar.
+For clients to utilize UDF on Excel, go to File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.Core.Sdk.Excel-AddIn-packed.xll->OK. Then UDFs can be utilized on Excel directly from the formula bar.
 
 ## Support
 For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at support@amaas.com. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
