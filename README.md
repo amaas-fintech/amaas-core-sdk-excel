@@ -9,7 +9,7 @@ AMaaS Core features a secure, encrypted database, which serves as the foundation
 ## Quick start (For developer)
 This project allows developers to develop Excel user defined functions (UDF) to retrieve data by calling AWS endpoint URL with SRP authentication.  
 
-# Preparation
+### Preparation
 Install Packages and add them as your references for the project: 
 ```
 Install-Package Excel-Dna
@@ -45,7 +45,7 @@ Install .xll:
 ```
 IntelliSense can be downloaded at: https://github.com/Excel-DNA/IntelliSense. 
 
-# To authenticate your AWS with Secure Remote Password (SRP)
+### To authenticate your AWS with Secure Remote Password (SRP)
 ```
 Navigate to App.config:
     <add key="USERNAME" value="" /    
@@ -60,7 +60,7 @@ Navigate to App.config:
     <!--Your POOL Name Without the Region-->
 Run Amaas.Core.Sdk.Authentication.Tests to check your authntication.
 ```
-# To create your query string
+### To create your query string
 ```
 1. Navigate to App.config:
     <add key="TRANSACTION" value="" />
@@ -87,7 +87,7 @@ Run Amaas.Core.Sdk.Authentication.Tests to check your authntication.
    ->TransactionDataAccess.cs:
      Update string[] children = { "children array in the json string1", "children array in the json string2" }; with your children parameters in countRows, getChildrenParamsValue, convertToNestedArray methods.    
 ```
-# To create a UDF: 
+### To create a UDF: 
 ```
 Navigate to TransactionUdf.cs:
 1. It must be a static method
