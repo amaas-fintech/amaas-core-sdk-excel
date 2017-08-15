@@ -137,6 +137,7 @@ The SDK contains unit tests to test the SRP authentication connection and data r
    GetTransactionByTransactionID("asset_manager_id", "transaction_id", "transaction_start_date", "transaction_end_date", "page_size", "page_number", "filter fields")
    GetTransactionByBookID("asset_manager_id", "book_id", "transaction_start_date", "transaction_end_date", "page_size", "page_number", "filter fields")
    ```
+  Note: By default, page_size is 100 and page_number is 1 (first page).
  2. To utilize the formula above:
    1.1 Download Amaas-core-sdk-net and look for the file: Amaas.core.sdk.Excel-AddIn-packed.xll.
    1.2 Navigate to Excel File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.core.sdk.Excel-AddIn-packed.xll->OK. Then UDFs can be tested on Excel directly from the formula bar.
