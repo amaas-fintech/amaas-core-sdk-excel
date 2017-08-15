@@ -16,7 +16,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             return idToken;
         }
 
-         public static async Task<String> RetrieveData(string AMID, string resourceID, string startDate, string endDate, string pageSize, string pageNum, string flag)
+        public static async Task<String> RetrieveData(string AMID, string resourceID, string startDate, string endDate, string pageSize,  string pageNum, string fields, string flag)
         {
             string idToken = Auth();
             string responseResult = "";
@@ -36,19 +36,44 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                     //make request
                     string url = "";
                     if (flag == "TransactionByTransactionID")
-                    {
-                        url = $"{ConfigurationManager.AppSettings["TRANSACTION"]}{AMID}/{resourceID}" + resourceID + "?" + "transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
-                        url = RemoveQueryStringByKey(url);
+                    {                        
+                        if (fields.Equals(""))
+                        {
+                            //for single AMID
+                            url = ConfigurationManager.AppSettings["TRANSACTION"] + "/" + AMID + "/" + resourceID + "?" + "transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
+                            url = RemoveQueryStringByKey(url);
+                        }
+                        else
+                        {
+                            url = ConfigurationManager.AppSettings["TRANSACTION"] + "?" + "asset_manager_ids=" + AMID + "&" + "transaction_ids=" + resourceID + "&" + "fields=" + fields + "&" + "transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
+                            url = RemoveQueryStringByKey(url);
+                        }
                     }
                     else if (flag == "TransactionByBookID")
                     {
-                        url = ConfigurationManager.AppSettings["TRANSACTION"] + AMID + "?" + "asset_book_ids=" + resourceID + "&transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
-                        url = RemoveQueryStringByKey(url);
+                        if (fields.Equals(""))
+                        {
+                            url = ConfigurationManager.AppSettings["TRANSACTION"] + "/" + AMID + "?" + "asset_book_ids=" + resourceID + "&transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
+                            url = RemoveQueryStringByKey(url);
+                        }
+                        else
+                        {
+                            url = ConfigurationManager.AppSettings["TRANSACTION"] + "?" + "asset_manager_ids=" + AMID + "&" + "asset_book_ids=" + resourceID + "&" + "fields=" + fields + "&" + "transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
+                            url = RemoveQueryStringByKey(url);
+                        }
                     }
                     else if (flag == "Position")
                     {
-                        url = ConfigurationManager.AppSettings["POSITION"] + AMID + "?" + "book_ids=" + resourceID + "&position_date=" + startDate + "&page_size=" + pageSize + "&page_no=" + pageNum;// + "&position_date=" + endDate;
-                        url = RemoveQueryStringByKey(url);
+                        if (fields.Equals(""))
+                        {
+                            url = ConfigurationManager.AppSettings["POSITION"] + "/" + AMID + "?" + "book_ids=" + resourceID + "&position_date=" + startDate + "&page_size=" + pageSize + "&page_no=" + pageNum;// + "&position_date=" + endDate;
+                            url = RemoveQueryStringByKey(url);
+                        }
+                        else
+                        {
+                            url = ConfigurationManager.AppSettings["POSITION"] + "?" + "asset_manager_ids=" + AMID + "&" + "book_ids=" + resourceID + "&" + "fields=" + fields + "&" + "transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
+                            url = RemoveQueryStringByKey(url);
+                        }
                     }
                     else
                     {
@@ -62,8 +87,8 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
             }
             return responseResult;
         }
-        
-         public static string RemoveQueryStringByKey(string url)
+
+        public static string RemoveQueryStringByKey(string url)
         {
             var uri = new Uri(url);
 
@@ -93,6 +118,8 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                 ? String.Format("{0}?{1}", pagePathWithoutQueryString, newQueryString)
                 : pagePathWithoutQueryString;
         }
+
+
     }
 }
 
