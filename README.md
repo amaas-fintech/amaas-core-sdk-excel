@@ -6,7 +6,10 @@ AMaaS is a modular platform for Asset Managers with an open, RESTful API for pro
 
 AMaaS Core features a secure, encrypted database, which serves as the foundation for asset management platforms and FinTech solutions. AMaaS also provides portfolio visualizations and analytics through AMaaS Web, and exception management & financial event notification through AMaaS Monitor.
 
-## Preparation
+## Quick start (For developer)
+This project allows developers to develop Excel user defined functions (UDF) to retrieve data by calling AWS endpoint URL with SRP authentication.  
+
+# Preparation
 Install Packages and add them as your references for the project: 
 ```
 Install-Package Excel-Dna
@@ -42,10 +45,7 @@ Install .xll:
 ```
 IntelliSense can be downloaded at: https://github.com/Excel-DNA/IntelliSense. 
 
-## Quick start (For developer)
-This project allows developers to develop Excel user defined functions (UDF) to retrieve data by calling AWS endpoint URL with SRP authentication.  
-
-To authenticate your AWS with Secure Remote Password (SRP)
+# To authenticate your AWS with Secure Remote Password (SRP)
 ```
 Navigate to App.config:
     <add key="USERNAME" value="" /    
@@ -60,7 +60,7 @@ Navigate to App.config:
     <!--Your POOL Name Without the Region-->
 Run Amaas.Core.Sdk.Authentication.Tests to check your authntication.
 ```
-To create your query string
+# To create your query string
 ```
 1. Navigate to App.config:
     <add key="TRANSACTION" value="" />
@@ -87,7 +87,7 @@ To create your query string
    ->TransactionDataAccess.cs:
      Update string[] children = { "children array in the json string1", "children array in the json string2" }; with your children parameters in countRows, getChildrenParamsValue, convertToNestedArray methods.    
 ```
-To create a UDF: 
+# To create a UDF: 
 ```
 Navigate to TransactionUdf.cs:
 1. It must be a static method
@@ -131,8 +131,15 @@ The SDK contains unit tests to test the SRP authentication connection and data r
 2. Navigate to Excel File->Options->Add-ins->Manage: Excel Add-ins->Go->YourProjectName-AddIn-packed.xll->OK. Then UDFs can be tested on Excel directly from the formula bar.
 
 ## Quick start (For Users)
-1. Download Amaas-core-sdk-net and look for the file: Amaas.core.sdk.Excel-AddIn-packed.xll.
-2. Navigate to Excel File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.core.sdk.Excel-AddIn-packed.xll->OK. Then UDFs can be tested on Excel directly from the formula bar.
+1. Available formula:
+   ```
+   GetPosiionByBookID("asset_manager_id", "book_id", "start_date", "page_size", "page_number", "filter fields")
+   GetTransactionByTransactionID("asset_manager_id", "transaction_id", "transaction_start_date", "transaction_end_date", "page_size", "page_number", "filter fields")
+   GetTransactionByBookID("asset_manager_id", "book_id", "transaction_start_date", "transaction_end_date", "page_size", "page_number", "filter fields")
+   ```
+ 2. To utilize the formula above:
+   1.1 Download Amaas-core-sdk-net and look for the file: Amaas.core.sdk.Excel-AddIn-packed.xll.
+   1.2 Navigate to Excel File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.core.sdk.Excel-AddIn-packed.xll->OK. Then UDFs can be tested on Excel directly from the formula bar.
 
 ## Support
 For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at support@amaas.com. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
