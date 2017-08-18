@@ -1,9 +1,11 @@
-﻿using System;
+using System;
+using System.Web;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace Amaas.Core.Sdk.Excel.DataAccess
 {
@@ -12,11 +14,11 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
         private static string Auth()
         {
             var auth = new Amaas.Core.Sdk.Authentication.CognitoAuthentication();
-            string idToken = auth.CheckPasswordAsync(ConfigurationManager.AppSettings["USERNAME"], ConfigurationManager.AppSettings["PASSWORD"]);
+            string idToken = auth.CheckPasswordAsync("amaas", "amaaswelcome");
             return idToken;
         }
 
-        public static async Task<String> RetrieveData(string AMID, string resourceID, string startDate, string endDate, string pageSize,  string pageNum, string fields, string flag)
+        public static async Task<String> RetrieveData(string AMID, string resourceID, string startDate, string endDate, string pageSize,  string pageNum, string fields, List<string> assetIDs, string assetOptionalFields, string flag)
         {
             string idToken = Auth();
             string responseResult = "";
@@ -42,6 +44,7 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                             //for single AMID
                             url = ConfigurationManager.AppSettings["TRANSACTION"] + "/" + AMID + "/" + resourceID + "?" + "transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
                             url = RemoveQueryStringByKey(url);
+                            //url = "https://api.amaas.com/v1.0/transaction/transactions/" + AMID+"/"+resourceID;
                         }
                         else
                         {
@@ -74,6 +77,18 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
                             url = ConfigurationManager.AppSettings["POSITION"] + "?" + "asset_manager_ids=" + AMID + "&" + "book_ids=" + resourceID + "&" + "fields=" + fields + "&" + "transaction_date_start=" + startDate + "&transaction_date_end=" + endDate + "&page_size=" + pageSize + "&page_no=" + pageNum;
                             url = RemoveQueryStringByKey(url);
                         }
+                    }
+                    else if(flag == "AssetSearch")
+                    {
+                        url = "https://api-dev.amaas.com/v1.0/asset/assets?asset_manager_ids=" + AMID +"&" + "asset_ids=";
+                        foreach (string assetID in assetIDs)
+                        {
+                            url +=  assetID;
+                            url += ",";
+                        }
+                        url = url.Substring(0, (url.Length - 1));
+                        url = url + "&" + "fields=" + assetOptionalFields;
+                        url = RemoveQueryStringByKey(url);
                     }
                     else
                     {
@@ -122,4 +137,3 @@ namespace Amaas.Core.Sdk.Excel.DataAccess
 
     }
 }
-
