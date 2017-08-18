@@ -163,10 +163,10 @@ The SDK contains unit tests to test the SRP authentication connection and data r
    ```
   Note: By default, page_size is 100 and page_number is 1 (first page).
  2. To utilize the formula above:
-   ...1.1 Download Amaas-core-sdk-net and look for the file: Amaas.core.sdk.Excel-AddIn-packed.xll.
-   ...1.2 Navigate to Excel File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.core.sdk.Excel-AddIn-packed.xll->OK. Then UDFs can be tested on Excel directly from the formula bar.
-   ...1.3 For every formula, asset manager ID must be provided.
-   ...1.4 Find Fields: Provides the functionality of the Field Search function directly in Excel, so you can locate, store, and use Argomi data fields, gaining access to the data you need for your analysis. When you specify the fileds to search, please follow the input format: client_id for client id.
+     1.1 Download Amaas-core-sdk-net and look for the file: Amaas.core.sdk.Excel-AddIn-packed.xll.
+     1.2 Navigate to Excel File->Options->Add-ins->Manage: Excel Add-ins->Go->Amaas.core.sdk.Excel-AddIn-packed.xll->OK. Then UDFs can be tested on Excel directly from the formula bar.
+     1.3 For every formula, asset manager ID must be provided.
+     1.4 Find Fields: Provides the functionality of the Field Search function directly in Excel, so you can locate, store, and use Argomi data fields, gaining access to the data you need for your analysis. When you specify the fileds to search, please follow the input format: client_id for client id.
 
 ## Support
 For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at support@amaas.com. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
