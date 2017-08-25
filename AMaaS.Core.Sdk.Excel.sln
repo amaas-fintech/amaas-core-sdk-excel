@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMaaS.Core.Sdk.Excel", "AMaaS.Core.Sdk.Excel\AMaaS.Core.Sdk.Excel.csproj", "{27EB68BF-1A70-4D36-A7EC-538F372DCE32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27EB68BF-1A70-4D36-A7EC-538F372DCE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27EB68BF-1A70-4D36-A7EC-538F372DCE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27EB68BF-1A70-4D36-A7EC-538F372DCE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27EB68BF-1A70-4D36-A7EC-538F372DCE32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
