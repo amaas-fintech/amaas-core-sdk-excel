@@ -32,16 +32,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AMaaS.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amaas.Core.1.0.8\lib\net452\AMaaS.Core.dll</HintPath>
+      <HintPath>..\packages\Amaas.Core.1.0.9\lib\net452\AMaaS.Core.dll</HintPath>
     </Reference>
     <Reference Include="AMaaS.Core.Sdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amaas.Core.1.0.8\lib\net452\AMaaS.Core.Sdk.dll</HintPath>
+      <HintPath>..\packages\Amaas.Core.1.0.9\lib\net452\AMaaS.Core.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="AMaaS.Core.Sdk.Assets, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amaas.Core.1.0.8\lib\net452\AMaaS.Core.Sdk.Assets.dll</HintPath>
+      <HintPath>..\packages\Amaas.Core.1.0.9\lib\net452\AMaaS.Core.Sdk.Assets.dll</HintPath>
     </Reference>
     <Reference Include="AMaaS.Core.Sdk.Transactions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amaas.Core.1.0.8\lib\net452\AMaaS.Core.Sdk.Transactions.dll</HintPath>
+      <HintPath>..\packages\Amaas.Core.1.0.9\lib\net452\AMaaS.Core.Sdk.Transactions.dll</HintPath>
     </Reference>
     <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
@@ -87,12 +87,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\ExcelAbstraction.cs" />
+    <Compile Include="Abstractions\IExcel.cs" />
     <Compile Include="Constants\QueryConstants.cs" />
+    <Compile Include="Constants\References.cs" />
+    <Compile Include="Constants\UdfNames.cs" />
     <Compile Include="Formatters\IFormatter.cs" />
+    <Compile Include="Formatters\PositionFormatter.cs" />
     <Compile Include="Formatters\TransactionFormatter.cs" />
     <Compile Include="Helpers\ArgumentHelpers.cs" />
+    <Compile Include="Helpers\ExcelHelpers.cs" />
     <Compile Include="Helpers\ExcelTable.cs" />
     <Compile Include="ITransactionsAddin.cs" />
+    <Compile Include="Models\EnrichedModel.cs" />
+    <Compile Include="Models\IEnrichedModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionsAddin.cs" />
   </ItemGroup>

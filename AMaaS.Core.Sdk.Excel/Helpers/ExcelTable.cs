@@ -11,7 +11,13 @@ namespace AMaaS.Core.Sdk.Excel.Helpers
 {
     public static class ExcelTable
     {
-        public static void Write<T>(IEnumerable<T> data, IFormatter<T> formatter, ExcelReference caller) where T: AMaaSModel
+        public static void WriteCell(ExcelReference target, string value, int row = 0, int column = 0)
+        {
+            var output = new object[row, column];
+            ExcelAsyncUtil.QueueAsMacro(() => target.SetValue(output));
+        }
+
+        public static void Write<T>(IEnumerable<T> data, IFormatter<T> formatter, ExcelReference caller) 
         {   
             Task.Factory.StartNew(() =>
             {
@@ -37,6 +43,27 @@ namespace AMaaS.Core.Sdk.Excel.Helpers
                     target.SetValue(output);
                 });
             });
+        }
+
+        public static object[,] Format<T>(IEnumerable<T> data, IFormatter<T> formatter, ExcelReference caller)
+        {
+            var table    = new object[][] { formatter.Header }.Union(data.Select(t => formatter.FormatData(t)));
+            int rows     = table.Count();
+            int columns  = formatter.Header.Length;
+            var output   = new object[rows, columns];
+            int rowIndex = 0, columnIndex = 0;
+
+            foreach (var row in table)
+            {
+                columnIndex = 0;
+                foreach (var cell in row)
+                {
+                    output[rowIndex, columnIndex++] = cell;
+                }
+                rowIndex++;
+            }
+            ArrayResizer.Resize(output, caller);
+            return output;
         }
     }
 }

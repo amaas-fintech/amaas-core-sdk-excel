@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AMaaS.Core.Sdk.Excel.Formatters
+namespace AMaaS.Core.Sdk.Excel.Models
 {
-    public interface IFormatter<T>
+    public interface IEnrichedModel<TModel, TData> where TModel : AMaaSModel
     {
-        object[] FormatData(T data);
-        object[] Header { get; }
+        TData Data { get; set; }
     }
 }
