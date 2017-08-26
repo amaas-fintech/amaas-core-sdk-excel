@@ -9,6 +9,7 @@ namespace AMaaS.Core.Sdk.Excel.Abstractions
 {
     public interface IExcel
     {
+        void Initialize();
         object Run(string udfName, object parameters, ExcelFunc func);
         ExcelReference Call(int excelFunction);
     }

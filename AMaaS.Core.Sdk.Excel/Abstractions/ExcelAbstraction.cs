@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
+using ExcelDna.IntelliSense;
 
 namespace AMaaS.Core.Sdk.Excel.Abstractions
 {
@@ -17,6 +18,12 @@ namespace AMaaS.Core.Sdk.Excel.Abstractions
         public object Run(string udfName, object parameters, ExcelFunc func)
         {
             return ExcelAsyncUtil.Run(udfName, parameters, func);
+        }
+
+        public void Initialize()
+        {
+            IntelliSenseServer.Register();
+            ExcelIntegration.RegisterUnhandledExceptionHandler(ex => $"#ERROR: {(ex as Exception)?.Message}");
         }
     }
 }
