@@ -8,5 +8,7 @@ namespace AMaaS.Core.Sdk.Excel
 {
     public interface IAMaaSAddin
     {
+        void AutoClose();
+        void AutoOpen();
     }
 }

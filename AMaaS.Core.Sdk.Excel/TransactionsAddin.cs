@@ -24,13 +24,13 @@ namespace AMaaS.Core.Sdk.Excel
             [ExcelArgument(AllowReference = true, Name = "Book ID")]string bookId = "",
             [ExcelArgument(AllowReference = true, Name = "Position Date")]string businessDate = "")
         {
-            var caller = _excel.Call(XlCall.xlfCaller);
-            var output = _excel.Run(UdfNames.TransactionSearch,
+            var caller = ExcelInterface.Call(XlCall.xlfCaller);
+            var output = ExcelInterface.Run(UdfNames.TransactionSearch,
                                     string.Join(",", bookId, businessDate),
             delegate
             {
-                if (_assetManagerIds.Count == 0)
-                    throw new ApplicationException($"User {_userName} does not have a valid asset manager relationship");
+                if (AssetManagerIds.Count == 0)
+                    throw new ApplicationException($"User {UserName} does not have a valid asset manager relationship");
 
                 var bookIds      = bookId.MatchAll() ? null : new List<string> { bookId };
                 var positionDate = !businessDate.MatchAll() && 
@@ -38,20 +38,20 @@ namespace AMaaS.Core.Sdk.Excel
                                                 ? (DateTime?)businessDateParsed 
                                                 : null;
 
-                var api       = _container.Resolve<ITransactionsInterface>();
+                var api       = Container.Resolve<ITransactionsInterface>();
                 var positions = api.SearchPositions(
-                                    assetManagerIds: _assetManagerIds,
+                                    assetManagerIds: AssetManagerIds,
                                     bookIds: bookIds,
                                     positionDate: positionDate).Result;
-                var assetsApi = _container.Resolve<IAssetsInterface>();
+                var assetsApi = Container.Resolve<IAssetsInterface>();
                 var assets    = assetsApi.SearchAssets(
-                                            assetManagerIds: _assetManagerIds,
+                                            assetManagerIds: AssetManagerIds,
                                             assetIds: positions.Select(p => p.AssetId).ToList(),
                                             pageNo: 1,
                                             pageSize: QueryConstants.DefaultPageSize).Result;
                 var models = positions.Select(p => 
                                 new EnrichedModel<Position, Asset>(p, assets.FirstOrDefault(a => a.AssetId == p.AssetId)));
-                return ExcelTable.Format(models, _container.Resolve<IFormatter<EnrichedModel<Position, Asset>>>(), caller);
+                return ExcelTable.Format(models, Container.Resolve<IFormatter<EnrichedModel<Position, Asset>>>(), caller);
             });
             return output?.Equals(ExcelError.ExcelErrorNA) ?? true ? ExcelError.ExcelErrorGettingData : output;
         }
@@ -62,13 +62,13 @@ namespace AMaaS.Core.Sdk.Excel
             [ExcelArgument(AllowReference = true, Name = "Begin date for the transaction search.")] string beginDate = "", 
             [ExcelArgument(AllowReference = true, Name = "End date for the transaction search.")] string endDate = "")
         {
-            var caller = _excel.Call(XlCall.xlfCaller);
-            var output = _excel.Run(UdfNames.TransactionSearch, 
+            var caller = ExcelInterface.Call(XlCall.xlfCaller);
+            var output = ExcelInterface.Run(UdfNames.TransactionSearch, 
                                     string.Join(",", bookId, beginDate, endDate), 
             delegate
             {
-                if (_assetManagerIds.Count == 0)
-                    throw new ApplicationException($"User {_userName} does not have a valid asset manager relationship");
+                if (AssetManagerIds.Count == 0)
+                    throw new ApplicationException($"User {UserName} does not have a valid asset manager relationship");
 
                 var bookIds = bookId.MatchAll() ? null : new List<string> { bookId };
                 var transactionStartDate = !beginDate.MatchAll() &&
@@ -79,23 +79,23 @@ namespace AMaaS.Core.Sdk.Excel
                                          DateTime.TryParse(endDate, out DateTime endDateParsed)
                                                 ? (DateTime?)endDateParsed
                                                 : null;
-                var api          = _container.Resolve<ITransactionsInterface>();
+                var api          = Container.Resolve<ITransactionsInterface>();
                 var transactions = api.SearchTransactions(
-                                        assetManagerIds: _assetManagerIds,
+                                        assetManagerIds: AssetManagerIds,
                                         assetBookIds: bookIds,
                                         transactionDateStart: transactionStartDate,
                                         transactionDateEnd: transactionEndDate,
                                         pageNo: 1,
                                         pageSize: QueryConstants.DefaultPageSize).Result.ToList();
-                var assetsApi = _container.Resolve<IAssetsInterface>();
+                var assetsApi = Container.Resolve<IAssetsInterface>();
                 var assets    = assetsApi.SearchAssets(
-                                            assetManagerIds: _assetManagerIds,
+                                            assetManagerIds: AssetManagerIds,
                                             assetIds: transactions.Select(t => t.AssetId).ToList(),
                                             pageNo: 1,
                                             pageSize: QueryConstants.DefaultPageSize).Result;
                 var models = transactions.Select(t => 
                                 new EnrichedModel<Transaction, Asset>(t, assets.FirstOrDefault(a => a.AssetId == t.AssetId)));
-                return ExcelTable.Format(models, _container.Resolve<IFormatter<EnrichedModel<Transaction, Asset>>>(), caller);
+                return ExcelTable.Format(models, Container.Resolve<IFormatter<EnrichedModel<Transaction, Asset>>>(), caller);
             });
 
             return output?.Equals(ExcelError.ExcelErrorNA) ?? true ? ExcelError.ExcelErrorGettingData : output;

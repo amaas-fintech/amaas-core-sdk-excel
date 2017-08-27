@@ -22,16 +22,15 @@ namespace AMaaS.Core.Sdk.Excel
 {
     public abstract class AMaaSAddinBase : IExcelAddIn
     {
-        protected static IContainer _container;
-        protected static IExcel     _excel;
-        protected static string     _userAmid;
-        protected static string     _userName;
-        protected static List<int>  _assetManagerIds;
-        protected static Task       _initialize;
+        protected static IContainer Container { get; private set; }
+        protected static IExcel     ExcelInterface { get; private set; }
+        protected static string     UserAmid { get; private set; }
+        protected static string     UserName {get; private set;}
+        protected static List<int> AssetManagerIds { get; private set; } = new List<int>();
+        protected static Task       InitializeTask { get; private set; }
 
         public void AutoClose()
         {
-            throw new NotImplementedException();
         }
 
         public void AutoOpen()
@@ -46,22 +45,22 @@ namespace AMaaS.Core.Sdk.Excel
             builder.RegisterType<PositionFormatter>().As<IFormatter<EnrichedModel<Position, Asset>>>().SingleInstance();
             builder.RegisterType<ExcelAbstraction>().As<IExcel>().SingleInstance();
 
-            _container  = builder.Build();
-            _excel      = _container.Resolve<IExcel>();
-            _initialize = Initialize();
-            _excel.Initialize();
+            Container      = builder.Build();
+            ExcelInterface = Container.Resolve<IExcel>();
+            InitializeTask = Initialize();
+            ExcelInterface.Initialize();
         }
 
         private async Task Initialize()
         {
-            var assetManagerInterface = _container.Resolve<IAssetManagersInterface>();
-            _userAmid                 = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.AssetManagerId);
-            _userName                 = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.UserName);
-            var relationships         = await assetManagerInterface.GetUserRelationships(int.Parse(_userAmid));
-            _assetManagerIds          = relationships.Select(r => r.AssetManagerId).ToList();
+            var assetManagerInterface = Container.Resolve<IAssetManagersInterface>();
+            UserAmid                  = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.AssetManagerId);
+            UserName                  = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.UserName);
+            var relationships         = await assetManagerInterface.GetUserRelationships(int.Parse(UserAmid));
+            AssetManagerIds           = relationships.Select(r => r.AssetManagerId).ToList();
 
 #if DEBUG
-            _assetManagerIds = _assetManagerIds.Count == 0 ? new List<int> { 1, 10 } : _assetManagerIds;
+            AssetManagerIds = AssetManagerIds.Count == 0 ? new List<int> { 1, 10 } : AssetManagerIds;
 #endif
         }
     }
