@@ -26,7 +26,7 @@ namespace AMaaS.Core.Sdk.Excel
 
         [ExcelFunction(Name = UdfNames.BookPositionSearch, Description = "Retrieve positions by book")]
         public static object GetBookPositions(
-            [ExcelArgument(AllowReference = true, Name = "Book ID")]string bookId = "",
+            [ExcelArgument(AllowReference = true, Name = "Book")]string bookId = "",
             [ExcelArgument(AllowReference = true, Name = "Position Date")]string businessDate = "")
         {
            
@@ -68,17 +68,17 @@ namespace AMaaS.Core.Sdk.Excel
 
         [ExcelFunction(Name = UdfNames.TransactionSearch, Description = "Retrieve transactions by book")]
         public static object GetTransactions(
-            [ExcelArgument(AllowReference = true, Name = "Begin date for the transaction search.")] string beginDate = "",
-            [ExcelArgument(AllowReference = true, Name = "End date for the transaction search.")] string endDate = "")
+            [ExcelArgument(AllowReference = true, Name = "Start date", Description = "Start date of the transaction date range filter.")] string beginDate = "",
+            [ExcelArgument(AllowReference = true, Name = "End date", Description = "End date of the transaction date range filter.")] string endDate = "")
         {
             return GetBookTransactions(string.Empty, beginDate, endDate);
         }
 
         [ExcelFunction(Name = UdfNames.BookTransactionSearch, Description = "Retrieve transactions by book")]
         public static object GetBookTransactions(
-            [ExcelArgument(AllowReference = true, Name = "Book ID")] string bookId = "", 
-            [ExcelArgument(AllowReference = true, Name = "Begin date for the transaction search.")] string beginDate = "", 
-            [ExcelArgument(AllowReference = true, Name = "End date for the transaction search.")] string endDate = "")
+            [ExcelArgument(AllowReference = true, Name = "Book")] string bookId = "", 
+            [ExcelArgument(AllowReference = true, Name = "Start date", Description = "Start date of the transaction date range filter.")] string beginDate = "", 
+            [ExcelArgument(AllowReference = true, Name = "End date", Description = "End date of the transaction date range filter.")] string endDate = "")
         {
             var caller        = AddinContext.Excel.Call(XlCall.xlfCaller);
             ExcelFunc getData = () =>

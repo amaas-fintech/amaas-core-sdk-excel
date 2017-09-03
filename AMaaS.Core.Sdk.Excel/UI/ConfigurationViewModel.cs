@@ -75,9 +75,14 @@ namespace AMaaS.Core.Sdk.Excel.UI
 
         public ConfigurationViewModel()
         {
+#if DEBUG
             SelectedConfiguration = Configurations.OfType<AMaaSConfigDev>().FirstOrDefault();
+#endif
+#if !DEBUG
+            SelectedConfiguration = Configurations.OfType<AMaaSConfigStaging>().FirstOrDefault();
+#endif
         }
 
-        #endregion
+#endregion
     }
 }
