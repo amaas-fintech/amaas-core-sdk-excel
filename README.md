@@ -2,7 +2,7 @@
 This add-in enables Argomi users to interface with Argomi using Microsoft Excel user defined functions. To start using the add-in, follow the steps below:
 
 ## Installation
-1. Download the [Argomi Excel Add-in](https://github.com/amaas-fintech/amaas-core-sdk-excel/blob/master/Distribution/Argomi.ExcelAddIn.xll)
+1. Download the [Argomi Excel Add-in](https://github.com/amaas-fintech/amaas-core-sdk-excel/raw/master/Distribution/Argomi.ExcelAddIn.xll)
 2. Open Microsoft Excel. Click the File tab, click Options, and then click the Add-Ins category.
 3. In the Manage box, click Excel Add-ins, and then click Go.
     - The Add-Ins dialog box appears.
