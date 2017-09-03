@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMaaS.Core.Sdk.Excel", "AMaaS.Core.Sdk.Excel\AMaaS.Core.Sdk.Excel.csproj", "{27EB68BF-1A70-4D36-A7EC-538F372DCE32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMaaS.Core.Sdk.Excel.Tests", "AMaaS.Core.Sdk.Excel.Tests\AMaaS.Core.Sdk.Excel.Tests.csproj", "{801B7DB4-D4BE-4D08-8A52-F618991D3279}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{27EB68BF-1A70-4D36-A7EC-538F372DCE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27EB68BF-1A70-4D36-A7EC-538F372DCE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27EB68BF-1A70-4D36-A7EC-538F372DCE32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{801B7DB4-D4BE-4D08-8A52-F618991D3279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{801B7DB4-D4BE-4D08-8A52-F618991D3279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{801B7DB4-D4BE-4D08-8A52-F618991D3279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{801B7DB4-D4BE-4D08-8A52-F618991D3279}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

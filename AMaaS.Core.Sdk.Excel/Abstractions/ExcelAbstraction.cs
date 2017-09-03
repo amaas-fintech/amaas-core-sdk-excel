@@ -23,7 +23,14 @@ namespace AMaaS.Core.Sdk.Excel.Abstractions
         public void Initialize()
         {
             IntelliSenseServer.Register();
-            ExcelIntegration.RegisterUnhandledExceptionHandler(ex => $"#ERROR: {(ex as Exception)?.Message}");
+            ExcelIntegration.RegisterUnhandledExceptionHandler(ex =>
+            {
+                var message = (ex as Exception)?.Message;
+                if(ex is AggregateException)
+                    message = ((AggregateException)ex).GetBaseException().Message;
+
+                return $"#ERROR: {message}";
+            });
         }
     }
 }
