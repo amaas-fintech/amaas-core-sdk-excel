@@ -8,7 +8,9 @@ namespace AMaaS.Core.Sdk.Excel.Constants
 {
     public static class UdfNames
     {
-        public const string TransactionSearch = "ARGO.TRANS";
-        public const string PositionSearch    = "ARGO.POS";
+        public const string BookTransactionSearch = "ARGO.BTRANS";
+        public const string BookPositionSearch    = "ARGO.BPOS";
+        public const string PositionSearch        = "ARGO.POS";
+        public const string TransactionSearch     = "ARGO.TRANS";
     }
 }

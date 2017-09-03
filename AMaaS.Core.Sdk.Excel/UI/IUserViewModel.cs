@@ -10,5 +10,8 @@ namespace AMaaS.Core.Sdk.Excel.UI
     {
         string Username { get; set; }
         string Password { get; set; }
+        bool IsLoggedIn { get; set; }
+
+        Task LoginAsync(Action onSuccess = null, Action<string> onError = null);
     }
 }

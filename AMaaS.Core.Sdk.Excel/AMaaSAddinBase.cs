@@ -24,12 +24,8 @@ namespace AMaaS.Core.Sdk.Excel
 {
     public abstract class AMaaSAddinBase : IExcelAddIn
     {
-        protected static IContainer Container { get; private set; }
-        protected static IExcel     ExcelInterface { get; private set; }
-        protected static string     UserAmid { get; private set; }
-        protected static string     UserName {get; private set;}
-        protected static List<int> AssetManagerIds { get; private set; } = new List<int>();
-        protected static Task       InitializeTask { get; private set; }
+        public static bool IsLoggedIn => 
+            AddinContext.Container?.Resolve<IUserViewModel>()?.IsLoggedIn ?? false;
 
         public void AutoClose()
         {
@@ -38,36 +34,23 @@ namespace AMaaS.Core.Sdk.Excel
         public void AutoOpen()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(new AMaaSConfigDev("v1.0")).As<IAMaaSConfiguration>().SingleInstance();
-            builder.RegisterType<AMaaSSession>().SingleInstance();
-            builder.RegisterType<TransactionsInterface>().As<ITransactionsInterface>().InstancePerLifetimeScope();
-            builder.RegisterType<AssetsInterface>().As<IAssetsInterface>().InstancePerLifetimeScope();
-            builder.RegisterType<AssetManagersInterface>().As<IAssetManagersInterface>().InstancePerLifetimeScope();
+            builder.RegisterType<AMaaSSession>();
+            builder.RegisterType<TransactionsInterface>().As<ITransactionsInterface>();
+            builder.RegisterType<AssetsInterface>().As<IAssetsInterface>();
+            builder.RegisterType<AssetManagersInterface>().As<IAssetManagersInterface>();
             builder.RegisterType<TransactionFormatter>().As<IFormatter<EnrichedModel<Transaction, Asset>>>().SingleInstance();
             builder.RegisterType<PositionFormatter>().As<IFormatter<EnrichedModel<Position, Asset>>>().SingleInstance();
             builder.RegisterType<ExcelAbstraction>().As<IExcel>().SingleInstance();
             builder.RegisterType<UserViewModel>().As<IUserViewModel>().SingleInstance();
+            builder.RegisterType<LoginView>().As<ILoginView>().SingleInstance();
+            builder.RegisterType<ConfigurationViewModel>().As<IAMaaSConfiguration>().SingleInstance();
 
-            Container      = builder.Build();
-            ExcelInterface = Container.Resolve<IExcel>();
-            InitializeTask = Initialize();
-            ExcelInterface.Initialize();
+            var container      = builder.Build();
+            var excelInterface = container.Resolve<IExcel>();
+            excelInterface.Initialize();
 
-            AddinContext.Container = Container;
-            AddinContext.Excel     = new Application(null, ExcelDnaUtil.Application);
-        }
-
-        private async Task Initialize()
-        {
-            var assetManagerInterface = Container.Resolve<IAssetManagersInterface>();
-            UserAmid                  = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.AssetManagerId);
-            UserName                  = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.UserName);
-            var relationships         = await assetManagerInterface.GetUserRelationships(int.Parse(UserAmid));
-            AssetManagerIds           = relationships.Select(r => r.AssetManagerId).ToList();
-
-#if DEBUG
-            AssetManagerIds = AssetManagerIds.Count == 0 ? new List<int> { 1, 10 } : AssetManagerIds;
-#endif
+            AddinContext.Container = container;
+            AddinContext.Excel     = excelInterface;
         }
     }
 }
