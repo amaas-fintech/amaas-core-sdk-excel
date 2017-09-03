@@ -6,12 +6,14 @@ using AMaaS.Core.Sdk.Constants;
 using AMaaS.Core.Sdk.Excel.Abstractions;
 using AMaaS.Core.Sdk.Excel.Formatters;
 using AMaaS.Core.Sdk.Excel.Models;
+using AMaaS.Core.Sdk.Excel.UI;
 using AMaaS.Core.Sdk.Extensions;
 using AMaaS.Core.Sdk.Transactions;
 using AMaaS.Core.Sdk.Transactions.Models;
 using Autofac;
 using ExcelDna.Integration;
 using ExcelDna.IntelliSense;
+using NetOffice.ExcelApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,11 +46,15 @@ namespace AMaaS.Core.Sdk.Excel
             builder.RegisterType<TransactionFormatter>().As<IFormatter<EnrichedModel<Transaction, Asset>>>().SingleInstance();
             builder.RegisterType<PositionFormatter>().As<IFormatter<EnrichedModel<Position, Asset>>>().SingleInstance();
             builder.RegisterType<ExcelAbstraction>().As<IExcel>().SingleInstance();
+            builder.RegisterType<UserViewModel>().As<IUserViewModel>().SingleInstance();
 
             Container      = builder.Build();
             ExcelInterface = Container.Resolve<IExcel>();
             InitializeTask = Initialize();
             ExcelInterface.Initialize();
+
+            AddinContext.Container = Container;
+            AddinContext.Excel     = new Application(null, ExcelDnaUtil.Application);
         }
 
         private async Task Initialize()
