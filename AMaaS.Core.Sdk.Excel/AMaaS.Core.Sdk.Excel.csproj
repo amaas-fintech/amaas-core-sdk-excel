@@ -61,11 +61,6 @@
     <Reference Include="AWSSDK.SecurityToken, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
       <HintPath>..\packages\AWSSDK.SecurityToken.3.3.3\lib\net45\AWSSDK.SecurityToken.dll</HintPath>
     </Reference>
-    <Reference Include="ExcelApi, Version=1.7.4.0, Culture=neutral, PublicKeyToken=26cf6d85ba68fa54, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetOffice.Excel.Net45.1.7.4-pre-jun-28-2015\lib\net45\ExcelApi.dll</HintPath>
-      <Private>True</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="ExcelDna.Integration, Version=0.34.6373.42344, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDna.Integration.0.34.6\lib\ExcelDna.Integration.dll</HintPath>
       <Private>False</Private>
@@ -186,8 +181,9 @@
     <Compile Include="UI\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AMaaS.Core.Sdk.Excel-AddIn.dna" />
     <None Include="app.config" />
+    <None Include="Argomi.ExcelAddIn.dna" />
+    <None Include="Argomi.ExcelAddin.config" />
     <None Include="packages.config" />
     <None Include="Properties\ExcelDna.Build.props" />
   </ItemGroup>
