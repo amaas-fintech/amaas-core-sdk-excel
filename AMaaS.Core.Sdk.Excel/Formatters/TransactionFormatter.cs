@@ -47,7 +47,7 @@ namespace AMaaS.Core.Sdk.Excel.Formatters
                 transaction.TransactionType.GetEnumDisplay(),
                 transaction.TransactionDate.ToISODateString(),
                 transaction.SettlementDate.ToISODateString(),
-                transaction.CounterPartyBookId,
+                transaction.CounterpartyBookId,
                 asset?.References.ContainsKey(References.Ticker) ?? false 
                     ? asset?.References[References.Ticker].ReferenceValue 
                     : asset?.AssetId ?? transaction.AssetId,
