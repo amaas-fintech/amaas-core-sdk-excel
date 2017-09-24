@@ -17,13 +17,9 @@ namespace AMaaS.Core.Sdk.Excel.Formatters
         {
             "Book",
             "Asset Type",
-            "Asset Id",
             "Asset",
-            "Quantity",
-            "Valid From",
-            "Valid To",
-            "Account Id",
-            "Account Type"
+            "Ticker",
+            "Quantity"
         };
 
         public object[] FormatData(EnrichedModel<Position, Asset> model)
@@ -34,15 +30,11 @@ namespace AMaaS.Core.Sdk.Excel.Formatters
             {
                 position.BookId,
                 asset?.AssetType ?? string.Empty,
+                asset?.DisplayName ?? asset?.Description ?? string.Empty,
                 asset?.References.ContainsKey(References.Ticker) ?? false
                     ? asset?.References[References.Ticker].ReferenceValue
                     : asset?.AssetId ?? position.AssetId,
-                asset?.DisplayName ?? asset?.Description ?? string.Empty,
-                position.Quantity,
-                position.ValidFrom.ToISODateString(),
-                position.ValidTo.ToISODateString(),
-                position.AccountId,
-                position.AccountingType.GetEnumDisplay()
+                position.Quantity
             };
         }
     }
