@@ -15,23 +15,24 @@ namespace AMaaS.Core.Sdk.Excel.Formatters
     {
         public object[] Header => new string[]
         {
-            "Book",
-            "Asset Type",
-            "Asset Id",
+            "Transaction ID",
+            "Asset Book ID",
+            "Transaction Type",
+            "Transaction Date",
+            "Settlement Date",
+            "Counterparty Book",
+            "Ticker",
             "Asset",
-            "Action",
+            "Asset Type",
+            "Transaction Ccy",
+            "Settlement Ccy",
             "Quantity",
             "Price",
-            "CCY",
-            "Trade Date",
-            "Settlement CCY",
-            "Settlement",
-            "CPTY",
-            "CPTY Book",
-            "Give-up CPTY",
+            "Gross Settlement",
+            "Net Settlement",
             "Commission",
             "Tax",
-            "Other Fees"
+            "Other Charges"
         };
 
         public object[] FormatData(EnrichedModel<Transaction, Asset> model)
@@ -41,26 +42,23 @@ namespace AMaaS.Core.Sdk.Excel.Formatters
 
             return new object[]
             {
+                transaction.TransactionId,
                 transaction.AssetBookId,
-                asset?.AssetType ?? string.Empty,
+                transaction.TransactionType.GetEnumDisplay(),
+                transaction.TransactionDate.ToISODateString(),
+                transaction.SettlementDate.ToISODateString(),
+                transaction.CounterPartyBookId,
                 asset?.References.ContainsKey(References.Ticker) ?? false 
                     ? asset?.References[References.Ticker].ReferenceValue 
                     : asset?.AssetId ?? transaction.AssetId,
                 asset?.DisplayName ?? asset?.Description ?? string.Empty,
-                transaction.TransactionAction.GetEnumDisplay(),
+                asset?.AssetType ?? string.Empty,
+                transaction.TransactionCurrency,
+                transaction.SettlementCurrency,
                 transaction.Quantity,
                 transaction.Price,
-                transaction.TransactionCurrency,
-                transaction.TransactionDate.ToISODateString(),
-                transaction.SettlementCurrency,
-                transaction.SettlementDate.ToISODateString(),
-                transaction.Parties.ContainsKey("CounterParty") 
-                    ? transaction.Parties["CounterParty"].PartyId 
-                    : string.Empty,
-                transaction.CounterPartyBookId,
-                transaction.Parties.ContainsKey("Giveup CounterParty") 
-                    ? transaction.Parties["Giveup CounterParty"].PartyId 
-                    : string.Empty,
+                transaction.GrossSettlement,
+                transaction.NetSettlement,
                 transaction.Charges.ContainsKey("Commission") ? (object)transaction.Charges["Commission"].ChargeValue : string.Empty,
                 transaction.Charges.ContainsKey("Tax") 
                     ? (object)transaction.Charges["Tax"].ChargeValue 
