@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AMaaS.Core.Sdk, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amaas.Core.1.1.7\lib\net452\AMaaS.Core.Sdk.dll</HintPath>
+    <Reference Include="AMaaS.Core.Sdk, Version=1.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amaas.Core.1.1.8\lib\net452\AMaaS.Core.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="AMaaS.Core.Sdk.AssetManagers, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Amaas.Core.AssetManagers.1.1.2\lib\net452\AMaaS.Core.Sdk.AssetManagers.dll</HintPath>
