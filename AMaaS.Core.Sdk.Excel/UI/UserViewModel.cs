@@ -6,6 +6,8 @@ using AMaaS.Core.Sdk.Configuration;
 using AMaaS.Core.Sdk.AssetManagers;
 using AMaaS.Core.Sdk.Constants;
 using System.Collections.Generic;
+using AMaaS.Core.Sdk.Parties.Models;
+using AMaaS.Core.Sdk.Parties;
 
 namespace AMaaS.Core.Sdk.Excel.UI
 {
@@ -17,6 +19,8 @@ namespace AMaaS.Core.Sdk.Excel.UI
         private string _password;
         private bool _isLoggedIn;
         private IAMaaSConfiguration _configuration;
+        private IEnumerable<Party> _assetManagerParties;
+        private Party _selectedAssetManagerParty;
 
         #endregion
 
@@ -52,6 +56,27 @@ namespace AMaaS.Core.Sdk.Excel.UI
             }
         }
 
+        public IEnumerable<Party> AssetManagerParties
+        {
+            get => _assetManagerParties;
+            set
+            {
+                _assetManagerParties = value;
+                RaisePropertyChange(nameof(AssetManagerParties));
+            }
+        }
+
+        public Party SelectedAssetManagerParty
+        {
+            get => _selectedAssetManagerParty;
+            set
+            {
+                _selectedAssetManagerParty = value;
+                AddinContext.AssumedAmid = _selectedAssetManagerParty.AssetManagerId;
+                RaisePropertyChange(nameof(SelectedAssetManagerParty));
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -79,12 +104,23 @@ namespace AMaaS.Core.Sdk.Excel.UI
             try
             {
                 var assetManagerInterface = Container.Resolve<IAssetManagersInterface>();
+                var partiesInterface      = Container.Resolve<IPartiesInterface>();
                 AddinContext.UserAmid     = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.AssetManagerId);
                 AddinContext.Username     = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.UserName);
                 var relationships         = await assetManagerInterface.GetUserRelationships(int.Parse(AddinContext.UserAmid));
-                AddinContext.AssumedAmid  = relationships.Count() != 0 ? relationships.Select(x => x.AssetManagerId).First() : 0; 
-                
-                IsLoggedIn = true;
+                var assetManagerParties   = new List<Party>();
+
+                foreach(var relationship in relationships)
+                {
+                    var parties = await partiesInterface.SearchParties(relationship.AssetManagerId, partyTypes: new List<string> { "AssetManager" });
+                    assetManagerParties.AddRange(parties);
+                }
+                AssetManagerParties       = assetManagerParties;
+                SelectedAssetManagerParty = AssetManagerParties.FirstOrDefault();
+
+                AddinContext.UserContext = this;
+                AddinContext.Excel.Ribbon?.Invalidate();
+                IsLoggedIn               = true;
                 onSuccess?.Invoke();
             }
             catch(Exception ex)

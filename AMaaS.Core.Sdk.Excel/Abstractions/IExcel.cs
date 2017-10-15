@@ -1,4 +1,5 @@
 ﻿using ExcelDna.Integration;
+using ExcelDna.Integration.CustomUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace AMaaS.Core.Sdk.Excel.Abstractions
         void Initialize();
         object Run(string udfName, object parameters, ExcelFunc func);
         ExcelReference Call(int excelFunction);
+        IRibbonUI Ribbon { get; set; }
     }
 }

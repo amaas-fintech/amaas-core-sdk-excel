@@ -79,6 +79,6 @@ namespace AMaaS.Core.Sdk.Excel.UI
             SelectedConfiguration = Configurations.OfType<AMaaSConfigProd>().FirstOrDefault();
         }
 
-#endregion
+        #endregion
     }
 }
