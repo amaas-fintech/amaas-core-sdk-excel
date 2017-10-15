@@ -115,7 +115,9 @@ namespace AMaaS.Core.Sdk.Excel.UI
                     var parties = await partiesInterface.SearchParties(relationship.AssetManagerId, partyTypes: new List<string> { "AssetManager" });
                     assetManagerParties.AddRange(parties);
                 }
-                AssetManagerParties       = assetManagerParties;
+                AssetManagerParties = assetManagerParties.GroupBy(x => x.PartyId)
+                                                         .Select(grp => grp.First())
+                                                         .ToList();
                 SelectedAssetManagerParty = AssetManagerParties.FirstOrDefault();
 
                 AddinContext.UserContext = this;
