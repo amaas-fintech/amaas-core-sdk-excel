@@ -36,12 +36,12 @@ namespace AMaaS.Core.Sdk.Excel
             builder.RegisterType<LoginView>().As<ILoginView>().SingleInstance();
             builder.RegisterType<ConfigurationViewModel>().As<IAMaaSConfiguration>().SingleInstance();
 
-            var container      = builder.Build();
+            var container = builder.Build();
             var excelInterface = container.Resolve<IExcel>();
             excelInterface.Initialize();
 
             AddinContext.Container = container;
-            AddinContext.Excel     = excelInterface;
+            AddinContext.Excel = excelInterface;
         }
     }
 }

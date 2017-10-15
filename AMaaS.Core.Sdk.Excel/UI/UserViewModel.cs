@@ -82,13 +82,8 @@ namespace AMaaS.Core.Sdk.Excel.UI
                 AddinContext.UserAmid     = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.AssetManagerId);
                 AddinContext.Username     = await assetManagerInterface.Session.GetTokenAttribute(CognitoAttributes.UserName);
                 var relationships         = await assetManagerInterface.GetUserRelationships(int.Parse(AddinContext.UserAmid));
-                AddinContext.AssetManagerIds = relationships.Select(r => r.AssetManagerId).ToList();
-
-#if DEBUG
-                AddinContext.AssetManagerIds = AddinContext.AssetManagerIds.Count == 0 
-                                                ? new List<int> { 1 } 
-                                                : AddinContext.AssetManagerIds;
-#endif
+                AddinContext.AssumedAmid  = relationships.Count() != 0 ? relationships.Select(x => x.AssetManagerId).First() : 0; 
+                
                 IsLoggedIn = true;
                 onSuccess?.Invoke();
             }

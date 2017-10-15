@@ -10,6 +10,6 @@ namespace AMaaS.Core.Sdk.Excel
         public static IContainer Container { get; set; }
         public static string UserAmid { get; set; }
         public static string Username { get; set; }
-        public static List<int> AssetManagerIds { get; set; } = new List<int>();
+        public static int AssumedAmid { get; set; }
     }
 }
