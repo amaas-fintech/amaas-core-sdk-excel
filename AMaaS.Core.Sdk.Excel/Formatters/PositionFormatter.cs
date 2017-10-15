@@ -16,10 +16,11 @@ namespace AMaaS.Core.Sdk.Excel.Formatters
         public object[] Header => new string[]
         {
             "Book",
-            "Asset Type",
-            "Asset",
-            "Ticker",
-            "Quantity"
+            "Asset Reference",
+            "Asset Id",
+            "Asset Name",
+            "Quantity",
+            "Asset Type"
         };
 
         public object[] FormatData(EnrichedModel<Position, Asset> model)
@@ -29,12 +30,11 @@ namespace AMaaS.Core.Sdk.Excel.Formatters
             return new object[]
             {
                 position.BookId,
-                asset?.AssetType ?? string.Empty,
+                asset?.References?.Values.Where(r => r.ReferencePrimary).Select(r => r.ReferenceValue).FirstOrDefault() ?? string.Empty,
+                asset?.AssetId ?? string.Empty,
                 asset?.DisplayName ?? asset?.Description ?? string.Empty,
-                asset?.References.ContainsKey(References.Ticker) ?? false
-                    ? asset?.References[References.Ticker].ReferenceValue
-                    : asset?.AssetId ?? position.AssetId,
-                position.Quantity
+                position.Quantity,
+                asset?.AssetType ?? string.Empty,
             };
         }
     }

@@ -6,6 +6,7 @@ using AMaaS.Core.Sdk.Excel.Abstractions;
 using AMaaS.Core.Sdk.Excel.Formatters;
 using AMaaS.Core.Sdk.Excel.Models;
 using AMaaS.Core.Sdk.Excel.UI;
+using AMaaS.Core.Sdk.Parties;
 using AMaaS.Core.Sdk.Transactions;
 using AMaaS.Core.Sdk.Transactions.Models;
 using Autofac;
@@ -28,6 +29,7 @@ namespace AMaaS.Core.Sdk.Excel
             builder.RegisterType<AMaaSSession>();
             builder.RegisterType<TransactionsInterface>().As<ITransactionsInterface>();
             builder.RegisterType<AssetsInterface>().As<IAssetsInterface>();
+            builder.RegisterType<PartiesInterface>().As<IPartiesInterface>();
             builder.RegisterType<AssetManagersInterface>().As<IAssetManagersInterface>();
             builder.RegisterType<TransactionFormatter>().As<IFormatter<EnrichedModel<Transaction, Asset>>>().SingleInstance();
             builder.RegisterType<PositionFormatter>().As<IFormatter<EnrichedModel<Position, Asset>>>().SingleInstance();
@@ -36,12 +38,12 @@ namespace AMaaS.Core.Sdk.Excel
             builder.RegisterType<LoginView>().As<ILoginView>().SingleInstance();
             builder.RegisterType<ConfigurationViewModel>().As<IAMaaSConfiguration>().SingleInstance();
 
-            var container      = builder.Build();
+            var container = builder.Build();
             var excelInterface = container.Resolve<IExcel>();
             excelInterface.Initialize();
 
             AddinContext.Container = container;
-            AddinContext.Excel     = excelInterface;
+            AddinContext.Excel = excelInterface;
         }
     }
 }

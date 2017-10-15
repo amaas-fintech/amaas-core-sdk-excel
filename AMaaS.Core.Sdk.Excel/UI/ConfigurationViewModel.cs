@@ -26,7 +26,7 @@ namespace AMaaS.Core.Sdk.Excel.UI
         public string AwsRegion => SelectedConfiguration?.AwsRegion;
         public Uri Endpoint => SelectedConfiguration?.Endpoint;
         public bool IsInitialized => SelectedConfiguration?.IsInitialized ?? false;
-        public string ApiVersion => "v1.0";
+        public string ApiVersion => "sg1.0";
         public string Username
         {
             get => _username;
@@ -66,7 +66,8 @@ namespace AMaaS.Core.Sdk.Excel.UI
         public List<IAMaaSConfiguration> Configurations => new List<IAMaaSConfiguration>
         {
             new AMaaSConfigDev(Username, Password, ApiVersion),
-            new AMaaSConfigStaging(Username, Password, ApiVersion)
+            new AMaaSConfigStaging(Username, Password, ApiVersion),
+            new AMaaSConfigProd(Username, Password, ApiVersion)
         };
 
         #endregion
@@ -75,14 +76,9 @@ namespace AMaaS.Core.Sdk.Excel.UI
 
         public ConfigurationViewModel()
         {
-#if DEBUG
-            SelectedConfiguration = Configurations.OfType<AMaaSConfigDev>().FirstOrDefault();
-#endif
-#if !DEBUG
-            SelectedConfiguration = Configurations.OfType<AMaaSConfigStaging>().FirstOrDefault();
-#endif
+            SelectedConfiguration = Configurations.OfType<AMaaSConfigProd>().FirstOrDefault();
         }
 
-#endregion
+        #endregion
     }
 }

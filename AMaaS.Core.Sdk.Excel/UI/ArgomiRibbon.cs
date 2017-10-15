@@ -27,6 +27,11 @@ namespace AMaaS.Core.Sdk.Excel.UI
             window.ShowDialog();
         }
 
+        public void OnLoad(IRibbonUI sender)
+        {
+            AddinContext.Excel.Ribbon = sender;
+        }
+
         public override object LoadImage(string imageId)
         {
             try
@@ -39,6 +44,41 @@ namespace AMaaS.Core.Sdk.Excel.UI
             catch
             {
                 return base.LoadImage(imageId);
+            }
+        }
+
+        public int GetItemCount(IRibbonControl control)
+        {
+            return AddinContext.UserContext?.AssetManagerParties?.Count() ?? 0;
+        }
+
+        public bool GetEnabled(IRibbonControl control)
+        {
+            var parties = AddinContext.UserContext?.AssetManagerParties ?? null;
+            return parties?.Count() > 0;
+        }
+
+        public string GetItemId(IRibbonControl control, int index)
+        {
+            return AddinContext.UserContext?.AssetManagerParties?.ToList()[index].PartyId ?? string.Empty;
+        }
+
+        public string GetSelectedItemId(IRibbonControl control)
+        {
+            return AddinContext.UserContext?.SelectedAssetManagerParty?.PartyId ?? string.Empty;
+        }
+
+        public string GetItemLabel(IRibbonControl control, int index)
+        {
+            return AddinContext.UserContext?.AssetManagerParties?.ToList()[index].DisplayName ?? string.Empty;
+        }
+
+        public void SaveChoice(IRibbonControl control, string selectedId, int selectedIndex)
+        {
+            var selectedParty = AddinContext.UserContext?.AssetManagerParties?.ToList()[selectedIndex];
+            if (selectedParty != null)
+            {
+                AddinContext.UserContext.SelectedAssetManagerParty = selectedParty;
             }
         }
     }

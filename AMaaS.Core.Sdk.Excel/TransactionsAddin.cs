@@ -36,7 +36,7 @@ namespace AMaaS.Core.Sdk.Excel
                 if (!IsLoggedIn)
                     throw new ApplicationException($"Please login from the Argomi tab.");
 
-                if (AddinContext.AssetManagerIds.Count == 0)
+                if (AddinContext.AssumedAmid == 0)
                     throw new ApplicationException($"User {AddinContext.Username} does not have a valid asset manager relationship");
 
                 var bookIds      = bookId.MatchAll() ? null : new List<string> { bookId };
@@ -46,12 +46,12 @@ namespace AMaaS.Core.Sdk.Excel
                                                 : null;
                 var api       = AddinContext.Container.Resolve<ITransactionsInterface>();
                 var positions = api.SearchPositions(
-                                    assetManagerIds: AddinContext.AssetManagerIds,
+                                    assetManagerId: AddinContext.AssumedAmid,
                                     bookIds: bookIds,
                                     positionDate: positionDate).Result;
                 var assetsApi = AddinContext.Container.Resolve<IAssetsInterface>();
                 var assets    = assetsApi.SearchAssets(
-                                            assetManagerIds: AddinContext.AssetManagerIds,
+                                            assetManagerId: AddinContext.AssumedAmid,
                                             assetIds: positions.Select(p => p.AssetId).ToList(),
                                             pageNo: 1,
                                             pageSize: QueryConstants.DefaultPageSize).Result;
@@ -86,7 +86,7 @@ namespace AMaaS.Core.Sdk.Excel
                 if (!IsLoggedIn)
                     throw new ApplicationException($"Please login from the Argomi tab.");
 
-                if (AddinContext.AssetManagerIds.Count == 0)
+                if (AddinContext.AssumedAmid == 0)
                     throw new ApplicationException($"User {AddinContext.Username} does not have a valid asset manager relationship");
 
                 var bookIds = bookId.MatchAll() ? null : new List<string> { bookId };
@@ -100,7 +100,7 @@ namespace AMaaS.Core.Sdk.Excel
                                                 : null;
                 var api          = AddinContext.Container.Resolve<ITransactionsInterface>();
                 var transactions = api.SearchTransactions(
-                                        assetManagerIds: AddinContext.AssetManagerIds,
+                                        assetManagerId: AddinContext.AssumedAmid,
                                         assetBookIds: bookIds,
                                         transactionDateStart: transactionStartDate,
                                         transactionDateEnd: transactionEndDate,
@@ -108,7 +108,7 @@ namespace AMaaS.Core.Sdk.Excel
                                         pageSize: QueryConstants.DefaultPageSize).Result.ToList();
                 var assetsApi = AddinContext.Container.Resolve<IAssetsInterface>();
                 var assets    = assetsApi.SearchAssets(
-                                            assetManagerIds: AddinContext.AssetManagerIds,
+                                            assetManagerId: AddinContext.AssumedAmid,
                                             assetIds: transactions.Select(t => t.AssetId).ToList(),
                                             pageNo: 1,
                                             pageSize: QueryConstants.DefaultPageSize).Result;

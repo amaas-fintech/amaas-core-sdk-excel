@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
 using ExcelDna.IntelliSense;
+using ExcelDna.Integration.CustomUI;
 
 namespace AMaaS.Core.Sdk.Excel.Abstractions
 {
@@ -32,5 +33,7 @@ namespace AMaaS.Core.Sdk.Excel.Abstractions
                 return $"#ERROR: {message}";
             });
         }
+
+        public IRibbonUI Ribbon { get; set; }
     }
 }
