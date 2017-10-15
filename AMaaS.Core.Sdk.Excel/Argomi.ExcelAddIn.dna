@@ -2,6 +2,7 @@
   <ExternalLibrary Path="AMaaS.Core.Sdk.Excel.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" />
   <Reference Path="AMaaS.Core.Sdk.AssetManagers.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" />
   <Reference Path="AMaaS.Core.Sdk.Assets.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" />
+  <Reference Path="AMaaS.Core.Sdk.Parties.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" />
   <Reference Path="AMaaS.Core.Sdk.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" />
   <Reference Path="AMaaS.Core.Sdk.Excel.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" />
   <Reference Path="AMaaS.Core.Sdk.Transactions.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" />
