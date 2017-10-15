@@ -43,4 +43,4 @@ The following list shows the currently supported user defined functions:
 
 
 ## Support
-For support with the SDKs, please raise issues on GitHub. The AMaaS team can be contacted at support@argomi.com. Customers who have purchased a support plan can find the contact details within AMaaS Admin.
+For support with the SDKs, please raise issues on GitHub. The Argomi team can be contacted at support@argomi.com. Customers who have purchased a support plan can find the contact details within the Argomi Account page.
