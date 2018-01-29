@@ -48,7 +48,9 @@ namespace AMaaS.Core.Sdk.Excel
                 var positions = api.SearchPositions(
                                     assetManagerId: AddinContext.AssumedAmid,
                                     bookIds: bookIds,
-                                    positionDate: positionDate).Result;
+                                    positionDate: positionDate,
+                                    pageNo: 1,
+                                    pageSize: QueryConstants.DefaultPageSize).Result;
                 var assetsApi = AddinContext.Container.Resolve<IAssetsInterface>();
                 var assets    = assetsApi.SearchAssets(
                                             assetManagerId: AddinContext.AssumedAmid,
