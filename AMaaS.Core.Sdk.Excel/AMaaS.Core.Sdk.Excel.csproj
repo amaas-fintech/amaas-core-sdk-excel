@@ -156,6 +156,7 @@
     <Compile Include="Abstractions\ExcelAbstraction.cs" />
     <Compile Include="Abstractions\IExcel.cs" />
     <Compile Include="AddinContext.cs" />
+    <Compile Include="Cache\AssetsCache.cs" />
     <Compile Include="Constants\QueryConstants.cs" />
     <Compile Include="Constants\References.cs" />
     <Compile Include="Constants\UdfNames.cs" />

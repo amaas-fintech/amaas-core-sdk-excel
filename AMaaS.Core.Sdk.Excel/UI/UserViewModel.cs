@@ -77,6 +77,15 @@ namespace AMaaS.Core.Sdk.Excel.UI
             }
         }
 
+        public ConfigurationViewModel Configuration
+        {
+            get => _configuration as ConfigurationViewModel;
+            set
+            {
+                _configuration = value;
+                RaisePropertyChange(nameof(Configuration));
+            }
+        }
         #endregion
 
         #region Constructor
@@ -127,7 +136,7 @@ namespace AMaaS.Core.Sdk.Excel.UI
             }
             catch(Exception ex)
             {
-                onError($"Login failed for user: {Username}");
+                onError($"Login failed for user: {Username}. Error: {ex.ToString()}");
             }
             finally
             {
