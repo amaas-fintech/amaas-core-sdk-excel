@@ -3,6 +3,7 @@ using AMaaS.Core.Sdk.Assets;
 using AMaaS.Core.Sdk.Assets.Models;
 using AMaaS.Core.Sdk.Configuration;
 using AMaaS.Core.Sdk.Excel.Abstractions;
+using AMaaS.Core.Sdk.Excel.Cache;
 using AMaaS.Core.Sdk.Excel.Formatters;
 using AMaaS.Core.Sdk.Excel.Models;
 using AMaaS.Core.Sdk.Excel.UI;
@@ -28,7 +29,7 @@ namespace AMaaS.Core.Sdk.Excel
             var builder = new ContainerBuilder();
             builder.RegisterType<AMaaSSession>();
             builder.RegisterType<TransactionsInterface>().As<ITransactionsInterface>();
-            builder.RegisterType<AssetsInterface>().As<IAssetsInterface>();
+            builder.RegisterType<AssetsCache>().As<IAssetsInterface>().SingleInstance();
             builder.RegisterType<PartiesInterface>().As<IPartiesInterface>();
             builder.RegisterType<AssetManagersInterface>().As<IAssetManagersInterface>();
             builder.RegisterType<TransactionFormatter>().As<IFormatter<EnrichedModel<Transaction, Asset>>>().SingleInstance();

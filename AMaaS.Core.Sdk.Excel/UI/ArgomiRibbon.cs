@@ -20,7 +20,7 @@ namespace AMaaS.Core.Sdk.Excel.UI
             {
                 Title     = "Argomi Login",
                 MaxWidth  = 300,
-                MaxHeight = 165
+                MaxHeight = 200
             };
 
             window.Content = new LoginView { ParentWindow = window };
