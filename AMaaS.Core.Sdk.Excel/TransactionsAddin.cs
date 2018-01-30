@@ -100,17 +100,31 @@ namespace AMaaS.Core.Sdk.Excel
                                          DateTime.TryParse(endDate, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out DateTime endDateParsed)
                                                 ? (DateTime?)endDateParsed
                                                 : null;
-                var models = new List<EnrichedModel<Transaction, Asset>>();
-                var pageNo = 1;
+                var models       = new List<EnrichedModel<Transaction, Asset>>();
+                var transactions = new List<Transaction>();
+                var pageNo       = 1;
                 while(true)
                 {
                     var results = SearchTransactions(bookIds, transactionStartDate, transactionEndDate, pageNo++);
                     if (results == null)
                         break;
 
-                    models.AddRange(results);
+                    transactions.AddRange(results);
                     if (results.Count() < QueryConstants.DefaultPageSize)
                         break;
+                }
+
+                if (transactions != null && transactions.Count != 0)
+                {
+                    var assetsApi = AddinContext.Container.Resolve<IAssetsInterface>();
+                    var assetIds  = transactions.Select(t => t.AssetId).Distinct().ToList();
+                    var assets    = assetsApi.SearchAssets(
+                                                assetManagerId: AddinContext.AssumedAmid,
+                                                assetIds: assetIds,
+                                                pageNo: 1,
+                                                pageSize: assetIds.Count).Result;
+                    models = transactions.Select(t =>
+                                    new EnrichedModel<Transaction, Asset>(t, assets.FirstOrDefault(a => a.AssetId == t.AssetId))).ToList();
                 }
 
                 return ExcelTable.Format(models, AddinContext.Container.Resolve<IFormatter<EnrichedModel<Transaction, Asset>>>(), caller);
@@ -121,47 +135,19 @@ namespace AMaaS.Core.Sdk.Excel
             return output?.Equals(ExcelError.ExcelErrorNA) ?? true ? ExcelError.ExcelErrorGettingData : output;
         }
 
-        private static IEnumerable<EnrichedModel<Transaction, Asset>> SearchTransactions(
+        private static IEnumerable<Transaction> SearchTransactions(
             List<string> bookIds, DateTime? transactionStartDate, DateTime? transactionEndDate, int pageNo)
         {
             var api = AddinContext.Container.Resolve<ITransactionsInterface>();
-            var fields = new List<string>
-            {
-                "transaction_id",
-                "asset_book_id",
-                "asset_id",
-                "transaction_type",
-                "transaction_date",
-                "settlement_date",
-                "counterparty_book_id",
-                "transaction_currency",
-                "settlement_currency",
-                "quantity",
-                "price",
-                "asset_manager_id",
-                "charges"
-            };
             var transactions = api.SearchTransactions(
                                     assetManagerId: AddinContext.AssumedAmid,
                                     assetBookIds: bookIds,
                                     transactionDateStart: transactionStartDate,
                                     transactionDateEnd: transactionEndDate,
-                                    fields: fields,
-                                    //childTypes: new List<string> { "charges" },
+                                    childTypes: new List<string> { "charges" },
                                     pageNo: pageNo,
                                     pageSize: QueryConstants.DefaultPageSize).Result.ToList();
-            if (transactions == null || transactions.Count == 0)
-                return null;
-
-            var assetsApi = AddinContext.Container.Resolve<IAssetsInterface>();
-            var assetIds = transactions.Select(t => t.AssetId).Distinct().ToList();
-            var assets = assetsApi.SearchAssets(
-                                        assetManagerId: AddinContext.AssumedAmid,
-                                        assetIds: assetIds,
-                                        pageNo: 1,
-                                        pageSize: assetIds.Count).Result;
-            return transactions.Select(t =>
-                            new EnrichedModel<Transaction, Asset>(t, assets.FirstOrDefault(a => a.AssetId == t.AssetId)));
+            return transactions;
         }
     }
 }

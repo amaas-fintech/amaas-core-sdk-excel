@@ -43,8 +43,8 @@
     <Reference Include="AMaaS.Core.Sdk.Parties, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Amaas.Core.Parties.1.0.1\lib\net452\AMaaS.Core.Sdk.Parties.dll</HintPath>
     </Reference>
-    <Reference Include="AMaaS.Core.Sdk.Transactions, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amaas.Core.Transactions.1.1.5\lib\net452\AMaaS.Core.Sdk.Transactions.dll</HintPath>
+    <Reference Include="AMaaS.Core.Sdk.Transactions, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amaas.Core.Transactions.1.1.7\lib\net452\AMaaS.Core.Sdk.Transactions.dll</HintPath>
     </Reference>
     <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
