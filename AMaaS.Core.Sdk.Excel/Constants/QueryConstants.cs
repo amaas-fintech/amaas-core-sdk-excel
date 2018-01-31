@@ -9,5 +9,6 @@ namespace AMaaS.Core.Sdk.Excel.Constants
     public static class QueryConstants
     {
         public const int DefaultPageSize = 1000;
+        public const int DefaultFilterSize = 200;
     }
 }
