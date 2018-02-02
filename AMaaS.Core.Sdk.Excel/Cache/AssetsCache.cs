@@ -38,19 +38,26 @@ namespace AMaaS.Core.Sdk.Excel.Cache
 
             if (searchAssetIds.Count > 0)
             {
-                var assetIdFilters = searchAssetIds.Select((x, i) => new { Index = i, Value = x })
+                try
+                {
+                    var assetIdFilters = searchAssetIds.Select((x, i) => new { Index = i, Value = x })
                                                    .GroupBy(x => x.Index / QueryConstants.DefaultFilterSize)
                                                    .Select(x => x.Select(v => v.Value).ToList())
                                                    .ToList();
-                var results = assetIdFilters.AsParallel().Select(async f => await _assetsClient.SearchAssets(
-                                                                                    assetManagerId: assetManagerId,
-                                                                                    assetIds: f,
-                                                                                    assetTypes: assetTypes,
-                                                                                    pageNo: pageNo,
-                                                                                    pageSize: pageSize))
-                                                         .Select(t => t.Result)
-                                                         .SelectMany(a => a);
-                results.ToList().ForEach(a => _cache[new AssetKey { AssetManagerId = assetManagerId, AssetId = a.AssetId }] = a);
+                    var results = assetIdFilters.AsParallel().Select(async f => await _assetsClient.SearchAssets(
+                                                                                        assetManagerId: assetManagerId,
+                                                                                        assetIds: f,
+                                                                                        assetTypes: assetTypes,
+                                                                                        pageNo: pageNo,
+                                                                                        pageSize: pageSize))
+                                                             .Select(t => t.Result)
+                                                             .SelectMany(a => a);
+                    results.ToList().ForEach(a => _cache[new AssetKey { AssetManagerId = assetManagerId, AssetId = a.AssetId }] = a);
+                }
+                catch(AggregateException aex)
+                {
+                    throw new ApplicationException(aex.InnerExceptions.First().Message);
+                }
             }
 
             return assetKeys.Select(key => _cache[key]).ToList();
