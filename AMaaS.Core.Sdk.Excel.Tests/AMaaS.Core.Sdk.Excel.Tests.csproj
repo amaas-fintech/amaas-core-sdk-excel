@@ -47,9 +47,8 @@
     <Reference Include="AMaaS.Core.Sdk.Assets, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Amaas.Core.Assets.1.1.4\lib\net452\AMaaS.Core.Sdk.Assets.dll</HintPath>
     </Reference>
-    <Reference Include="AMaaS.Core.Sdk.Transactions">
-      <HintPath>..\packages\Amaas.Core.Transactions.1.1.7\lib\net452\AMaaS.Core.Sdk.Transactions.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="AMaaS.Core.Sdk.Transactions, Version=1.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amaas.Core.Transactions.1.1.8\lib\net452\AMaaS.Core.Sdk.Transactions.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK.CognitoIdentity, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
       <HintPath>..\packages\AWSSDK.CognitoIdentity.3.3.2.14\lib\net45\AWSSDK.CognitoIdentity.dll</HintPath>
