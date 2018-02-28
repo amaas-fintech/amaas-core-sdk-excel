@@ -1,5 +1,6 @@
 ﻿using AMaaS.Core.Sdk.Assets;
 using AMaaS.Core.Sdk.Assets.Models;
+using AMaaS.Core.Sdk.Books;
 using AMaaS.Core.Sdk.Excel.Constants;
 using AMaaS.Core.Sdk.Excel.Formatters;
 using AMaaS.Core.Sdk.Excel.Helpers;
@@ -62,7 +63,7 @@ namespace AMaaS.Core.Sdk.Excel
                 return ExcelTable.Format(models, AddinContext.Container.Resolve<IFormatter<EnrichedModel<Position, Asset>>>(), caller);
             };
             var output = AddinContext.Excel.Run(
-                            UdfNames.BookTransactionSearch,
+                            UdfNames.BookPositionSearch,
                             string.Join(",", bookId, businessDate),
                             getData);
             return output?.Equals(ExcelError.ExcelErrorNA) ?? true ? ExcelError.ExcelErrorGettingData : output;
@@ -92,6 +93,7 @@ namespace AMaaS.Core.Sdk.Excel
                     throw new ApplicationException($"User {AddinContext.Username} does not have a valid asset manager relationship");
 
                 var bookIds = bookId.MatchAll() ? null : new List<string> { bookId };
+
                 var transactionStartDate = !beginDate.MatchAll() &&
                                            DateTime.TryParse(beginDate, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out DateTime beginDateParsed)
                                                 ? (DateTime?)beginDateParsed

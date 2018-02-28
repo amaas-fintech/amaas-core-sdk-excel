@@ -31,14 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AMaaS.Core.Sdk, Version=1.1.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amaas.Core.1.1.9\lib\net452\AMaaS.Core.Sdk.dll</HintPath>
+    <Reference Include="AMaaS.Core.Sdk, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amaas.Core.1.2.1\lib\net452\AMaaS.Core.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="AMaaS.Core.Sdk.AssetManagers, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Amaas.Core.AssetManagers.1.1.3\lib\net452\AMaaS.Core.Sdk.AssetManagers.dll</HintPath>
     </Reference>
-    <Reference Include="AMaaS.Core.Sdk.Assets, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Amaas.Core.Assets.1.1.4\lib\net452\AMaaS.Core.Sdk.Assets.dll</HintPath>
+    <Reference Include="AMaaS.Core.Sdk.Assets, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amaas.Core.Assets.1.1.5\lib\net452\AMaaS.Core.Sdk.Assets.dll</HintPath>
+    </Reference>
+    <Reference Include="AMaaS.Core.Sdk.Books, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amaas.Core.Books.1.0.1\lib\net452\AMaaS.Core.Sdk.Books.dll</HintPath>
     </Reference>
     <Reference Include="AMaaS.Core.Sdk.Parties, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Amaas.Core.Parties.1.0.1\lib\net452\AMaaS.Core.Sdk.Parties.dll</HintPath>
@@ -188,7 +191,9 @@
     <None Include="app.config" />
     <None Include="Argomi.ExcelAddIn.dna" />
     <None Include="Argomi.ExcelAddin.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\ExcelDna.Build.props" />
   </ItemGroup>
   <ItemGroup>
