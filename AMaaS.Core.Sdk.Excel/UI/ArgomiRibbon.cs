@@ -19,8 +19,11 @@ namespace AMaaS.Core.Sdk.Excel.UI
             var window = new Window
             {
                 Title     = "Argomi Login",
-                MaxWidth  = 300,
-                MaxHeight = 200
+                Width  = 300,
+                Height = 200,
+                MaxWidth = 800,
+                MaxHeight = 800,
+                ResizeMode = ResizeMode.CanResize
             };
 
             window.Content = new LoginView { ParentWindow = window };
